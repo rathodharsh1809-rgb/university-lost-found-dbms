@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}My Reports | University Lost & Found{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">My Lost Item Reports</h1>
+        <p class="page-subtitle">Track the status of items you have reported.</p>
+    </div>
+    <a href="{{ url_for('routes.report') }}" class="btn btn-primary">
+        <svg class="svg-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Report Lost Item
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="header-with-icon">
+            <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            </svg>
+            <h2 class="card-title">My Reported Items</h2>
+        </div>
+        <span class="badge badge-neutral">{{ reports|length }} Total Reports</span>
+    </div>
+
+    <div class="table-container">
+        <table class="app-table">
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Lost Location</th>
+                    <th>Lost Date</th>
+                    <th>Status</th>
+                    <th>Reported At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if reports %}
+                    {% for item in reports %}
+                    <tr>
+                        <td class="text-mono">#{{ item.lost_item_id }}</td>
+                        <td>
+                            <strong>{{ item.item_name }}</strong>
+                            {% if item.description %}
+                                <div class="table-subtext">{{ item.description }}</div>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.category or 'General' }}</td>
+                        <td>{{ item.lost_location }}</td>
+                        <td>{{ item.lost_date }}</td>
+                        <td>
+                            <span class="status-badge status-{{ item.status|lower }}">{{ item.status }}</span>
+                        </td>
+                        <td class="text-muted text-sm">{{ item.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="table-empty">
+                            No lost item reports found. Click "Report Lost Item" to create one.
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

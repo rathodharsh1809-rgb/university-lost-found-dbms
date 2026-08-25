@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications | University Lost & Found{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Notifications</h1>
+        <p class="page-subtitle">Updates regarding your reported lost items.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="header-with-icon">
+            <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <h2 class="card-title">Inbox</h2>
+        </div>
+        <span class="badge badge-neutral">{{ notifications|length }} Messages</span>
+    </div>
+
+    <div class="notifications-list">
+        {% if notifications %}
+            {% for note in notifications %}
+            <div class="notification-item">
+                <div class="notification-icon-box">
+                    <svg class="svg-notif" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </div>
+                <div class="notification-body">
+                    <p class="notification-message">{{ note.message }}</p>
+                    <span class="notification-time">{{ note.created_at }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="table-empty" style="padding: 32px 16px;">
+                No notifications in your inbox.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | University Lost & Found{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Department Admin Dashboard</h1>
+        <p class="page-subtitle">Inspect campus lost reports and update item statuses.</p>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('routes.admin_logout') }}" class="btn btn-secondary btn-sm" title="Log out from Admin session">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Logout
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="header-with-icon">
+            <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <h2 class="card-title">All Lost Item Reports</h2>
+        </div>
+        <span class="badge badge-neutral">{{ reports|length }} Reports Total</span>
+    </div>
+
+    <div class="table-container">
+        <table class="app-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item Name</th>
+                    <th>Student Name</th>
+                    <th>Category</th>
+                    <th>Lost Location</th>
+                    <th>Lost Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if reports %}
+                    {% for item in reports %}
+                    <tr>
+                        <td class="text-mono">#{{ item.lost_item_id }}</td>
+                        <td>
+                            <strong>{{ item.item_name }}</strong>
+                            {% if item.description %}
+                                <div class="table-subtext">{{ item.description }}</div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="user-chip">
+                                <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                {{ item.student_name }}
+                            </span>
+                            <div class="table-subtext">{{ item.student_email }}</div>
+                        </td>
+                        <td>{{ item.category or 'General' }}</td>
+                        <td>{{ item.lost_location }}</td>
+                        <td>{{ item.lost_date }}</td>
+                        <td>
+                            <span class="status-badge status-{{ item.status|lower }}">{{ item.status }}</span>
+                        </td>
+                        <td>
+                            {% if item.status == 'SEARCHING' %}
+                                <form action="{{ url_for('routes.mark_found', lost_item_id=item.lost_item_id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-action btn-sm">
+                                        <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="20 6 9 17 4 12"/>
+                                        </svg>
+                                        Mark as Found
+                                    </button>
+                                </form>
+                            {% else %}
+                                <span class="text-muted text-sm">Resolved</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="table-empty">No lost item reports recorded.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
