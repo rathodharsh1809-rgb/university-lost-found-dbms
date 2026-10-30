@@ -1,0 +1,13 @@
+title: University Lost & Found Department
+description: Academic DBMS Project Portal
+exclude:
+  - backend/
+  - database/
+  - documents/
+  - frontend/templates/
+  - frontend/README.md
+  - test_demo_flow.py
+  - Procfile
+  - render.yaml
+  - requirements.txt
+  - main.py
