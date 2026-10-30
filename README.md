@@ -113,16 +113,16 @@ Open: **`http://127.0.0.1:5000`**
 ### Deploy on Render (Free & Recommended)
 1. Sign up/Log in at [render.com](https://render.com).
 2. Click **New +** &rarr; **Web Service**.
-3. Connect your GitHub repository: `https://github.com/dkr4102/university-lost-found-dbms`.
+3. Connect your GitHub repository: `https://github.com/rathodharsh1809-rgb/university-lost-found-dbms`.
 4. Render will automatically detect `render.yaml` or use the following settings:
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn wsgi:app`
+   - **Start Command**: `gunicorn main:app`
 5. Click **Deploy Web Service**.
 
 ### Deploy on Railway
 1. Go to [railway.app](https://railway.app).
 2. Click **New Project** &rarr; **Deploy from GitHub repo**.
-3. Select `dkr4102/university-lost-found-dbms`.
+3. Select `rathodharsh1809-rgb/university-lost-found-dbms`.
 4. Railway automatically detects `Procfile` / `requirements.txt` and deploys instantly.
 
