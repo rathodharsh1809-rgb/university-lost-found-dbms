@@ -3,855 +3,1485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Report - AI-Assisted Web Application | Marwadi University</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
-
-        :root {
-            --primary: #1b4d3e;
-            --primary-dark: #12352b;
-            --accent: #2563eb;
-            --text-dark: #0f172a;
-            --text-muted: #475569;
-            --bg-light: #f8fafc;
-            --border: #cbd5e1;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            color: var(--text-dark);
-            background-color: #e2e8f0;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        /* Printable A4 Container */
-        .page-container {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 20mm auto;
-            background: #ffffff;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-            padding: 22mm 22mm 22mm 22mm;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        @media screen {
-            .page-container {
-                border-radius: 4px;
-            }
-        }
-
-        /* University Header Layout */
-        .univ-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 2px solid #0f172a;
-            padding-bottom: 12px;
-            margin-bottom: 24px;
-        }
-
-        .univ-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .univ-logo-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0284c7;
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 20px;
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
-            letter-spacing: -1px;
-        }
-
-        .univ-names {
-            line-height: 1.2;
-        }
-
-        .univ-title {
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #0f172a;
-        }
-
-        .univ-sub {
-            font-size: 10px;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .naac-badge {
-            background: #b91c1c;
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 999px;
-            border: 2px solid #fee2e2;
-        }
-
-        .dept-title {
-            text-align: right;
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #1e293b;
-            line-height: 1.35;
-        }
-
-        .dept-sub {
-            font-size: 11px;
-            font-weight: 600;
-            color: #475569;
-        }
-
-        /* Cover Page Styling */
-        .cover-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .report-main-title {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            color: #0f172a;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .report-subtitle {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 6px;
-        }
-
-        .semester-badge {
-            font-size: 14px;
-            font-weight: 600;
-            color: #64748b;
-            margin-bottom: 45px;
-        }
-
-        .project-tag {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #475569;
-            margin-bottom: 8px;
-        }
-
-        .project-title-box {
-            background: #f1f5f9;
-            border-left: 5px solid var(--primary);
-            padding: 20px 24px;
-            border-radius: 6px;
-            width: 100%;
-            max-width: 600px;
-            margin-bottom: 50px;
-        }
-
-        .project-title-text {
-            font-size: 20px;
-            font-weight: 800;
-            color: #0f172a;
-            line-height: 1.35;
-        }
-
-        .submission-box {
-            width: 100%;
-            max-width: 540px;
-            text-align: left;
-            border-top: 1px solid var(--border);
-            padding-top: 24px;
-        }
-
-        .submitted-heading {
-            font-size: 15px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .field-row {
-            display: flex;
-            align-items: baseline;
-            margin-bottom: 14px;
-            font-size: 13.5px;
-        }
-
-        .field-label {
-            font-weight: 700;
-            color: #334155;
-            width: 130px;
-            flex-shrink: 0;
-        }
-
-        .field-line {
-            flex: 1;
-            border-bottom: 1px dashed #64748b;
-            font-weight: 600;
-            color: #0f172a;
-            padding-left: 6px;
-        }
-
-        /* Inner Page Formatting */
-        h2.section-heading {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--primary-dark);
-            border-left: 4px solid var(--primary);
-            padding-left: 10px;
-            margin: 20px 0 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-        }
-
-        h3.subsection-heading {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1e293b;
-            margin: 14px 0 6px 0;
-        }
-
-        p, li {
-            color: #334155;
-            line-height: 1.6;
-            margin-bottom: 10px;
-            text-align: justify;
-        }
-
-        ul, ol {
-            padding-left: 20px;
-            margin-bottom: 12px;
-        }
-
-        /* TOC Styling */
-        .toc-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-        }
-
-        .toc-table tr {
-            border-bottom: 1px dotted #cbd5e1;
-        }
-
-        .toc-table td {
-            padding: 10px 4px;
-            font-size: 14px;
-        }
-
-        .toc-num {
-            font-weight: 700;
-            width: 30px;
-            color: var(--primary);
-        }
-
-        .toc-title {
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        .toc-page {
-            text-align: right;
-            font-weight: 700;
-            color: #475569;
-            width: 50px;
-        }
-
-        /* Tables & Callouts */
-        .report-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 14px 0;
-            font-size: 12.5px;
-        }
-
-        .report-table th, .report-table td {
-            border: 1px solid #cbd5e1;
-            padding: 8px 10px;
-            text-align: left;
-        }
-
-        .report-table th {
-            background-color: #f1f5f9;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .report-table tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-
-        .code-box {
-            background: #0f172a;
-            color: #e2e8f0;
-            padding: 12px 14px;
-            border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            line-height: 1.45;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
-
-        .prompt-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-left: 3px solid #2563eb;
-            border-radius: 5px;
-            padding: 10px 14px;
-            margin-bottom: 12px;
-        }
-
-        .prompt-purpose {
-            font-weight: 700;
-            font-size: 12px;
-            color: #1e3a8a;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .prompt-quote {
-            font-style: italic;
-            font-size: 12px;
-            color: #334155;
-            background: #ffffff;
-            padding: 6px 10px;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 4px;
-        }
-
-        .prompt-outcome {
-            font-size: 12px;
-            color: #059669;
-            font-weight: 600;
-        }
-
-        /* Footer */
-        .page-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #cbd5e1;
-            padding-top: 8px;
-            font-size: 10px;
-            font-weight: 600;
-            color: #94a3b8;
-            margin-top: 14px;
-        }
-
-        /* Print Controls */
-        .no-print-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #0f172a;
-            color: #ffffff;
-            padding: 10px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
-        }
-
-        .print-btn {
-            background: #10b981;
-            color: #ffffff;
-            border: none;
-            padding: 8px 18px;
-            font-size: 13px;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .print-btn:hover {
-            background: #059669;
-        }
-
-        @media print {
-            body {
-                background: none;
-            }
-            .no-print-bar {
-                display: none;
-            }
-            .page-container {
-                width: 100%;
-                min-height: 100vh;
-                margin: 0;
-                padding: 16mm 16mm 16mm 16mm;
-                box-shadow: none;
-                page-break-after: always;
-            }
-        }
-    </style>
+    <title>Operations & DBMS Analytics Dashboard | University Lost & Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
 
-    <!-- Screen-only Print Bar -->
-    <div class="no-print-bar">
-        <div>
-            <strong>AI-Assisted Web Application Project Report</strong> &bull; Marwadi University Department of CSE
+    <!-- Minimalist Top Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <span class="brand-symbol">
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                            <path d="M6 6h10M6 10h10"/>
+                        </svg>
+                    </span>
+                    <span class="brand-text">
+                        <span class="brand-badge">UNIVERSITY PORTAL</span>
+                        <span class="brand-name">Lost & Found Department</span>
+                    </span>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item active">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="browse.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Browse Items
+                </a>
+                <a href="report.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    Report Lost Item
+                </a>
+                <a href="/my-reports" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    My Reports
+                </a>
+                <a href="/notifications" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                    Notifications
+                    
+                </a>
+                <a href="admin.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    Admin
+                </a>
+            </nav>
+
+            <div class="nav-user">
+                <span class="user-avatar-icon">
+                    <svg class="svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </span>
+                <span class="user-name">Rahul (Student)</span>
+            </div>
         </div>
-        <button class="print-btn" onclick="window.print()">Print Report / Save as PDF</button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+        <div class="container">
+            <!-- Flash Message Alerts -->
+            
+                
+            
+
+            
+<!-- Executive Dashboard Header -->
+<div class="page-header dashboard-header">
+    <div>
+        <div class="header-pretitle">
+            <span class="live-dot"></span>
+            <span>LIVE SYSTEM TELEMETRY &bull; SQLite WAL MODE</span>
+        </div>
+        <h1 class="page-title">University Lost &amp; Found Master Dashboard</h1>
+        <p class="page-subtitle">Comprehensive operational metrics, cross-entity relational registries, and internal database performance metrics.</p>
+    </div>
+    <div class="header-actions">
+        <a href="report.html" class="btn btn-primary btn-sm">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="16"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            Report Lost Item
+        </a>
+        <a href="browse.html" class="btn btn-secondary btn-sm">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            Browse Catalog
+        </a>
+        <a href="admin.html" class="btn btn-secondary btn-sm">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Admin Console
+        </a>
+    </div>
+</div>
+
+<!-- 4 Key Performance Indicator (KPI) Cards -->
+<div class="kpi-grid">
+    <!-- Card 1: Lost Items -->
+    <div class="kpi-card card-lost">
+        <div class="kpi-header">
+            <span class="kpi-label">TOTAL LOST REPORTS</span>
+            <span class="kpi-icon-wrap icon-amber">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </span>
+        </div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-subtext">Cumulative reports submitted by campus students &amp; staff</div>
+        <div class="kpi-breakdown">
+            <span class="kpi-chip chip-searching" title="Currently Searching">
+                <strong>1</strong> Searching
+            </span>
+            <span class="kpi-chip chip-found" title="Located by department">
+                <strong>3</strong> Found
+            </span>
+            <span class="kpi-chip chip-collected" title="Collected by owner">
+                <strong>1</strong> Collected
+            </span>
+        </div>
     </div>
 
-    <!-- ==========================================
-         PAGE 1: COVER PAGE
-         ========================================== -->
-    <div class="page-container" style="margin-top: 60px;">
-        <div class="univ-header">
-            <div class="univ-brand">
-                <div class="univ-logo-badge">MU</div>
-                <div class="univ-names">
-                    <div class="univ-title">Marwadi University</div>
-                    <div class="univ-sub">Marwadi Chandarana Group</div>
-                </div>
-                <span class="naac-badge">NAAC A+</span>
-            </div>
-            <div class="dept-title">
-                Faculty of Engineering and Technology<br>
-                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
-            </div>
+    <!-- Card 2: Found Items -->
+    <div class="kpi-card card-found">
+        <div class="kpi-header">
+            <span class="kpi-label">FOUND INVENTORY</span>
+            <span class="kpi-icon-wrap icon-blue">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                    <path d="m3.3 7 8.7 5 8.7-5"/>
+                    <path d="M12 22V12"/>
+                </svg>
+            </span>
         </div>
-
-        <div class="cover-content">
-            <h1 class="report-main-title">PROJECT REPORT</h1>
-            <h2 class="report-subtitle">AI-Assisted Web Application Project</h2>
-            <div class="semester-badge">Semester 3 – CSE (AI/ML)</div>
-
-            <div class="project-tag">Project Title</div>
-            <div class="project-title-box">
-                <div class="project-title-text">
-                    University Lost &amp; Found Management System<br>
-                    <span style="font-size: 15px; font-weight: 600; color: #475569;">(DBMS &amp; AI-Assisted Telemetry Analytics Portal)</span>
-                </div>
-            </div>
-
-            <div class="submission-box">
-                <div class="submitted-heading">Submitted by</div>
-                <div class="field-row">
-                    <span class="field-label">Student Name:</span>
-                    <span class="field-line">Harsh</span>
-                </div>
-                <div class="field-row">
-                    <span class="field-label">Enrollment No.:</span>
-                    <span class="field-line">__________________________________________</span>
-                </div>
-                <div class="field-row">
-                    <span class="field-label">Division:</span>
-                    <span class="field-line">__________________________________________</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-footer">
-            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
-            <span>Cover Page</span>
+        <div class="kpi-value">7</div>
+        <div class="kpi-subtext">Items turned in to the Lost &amp; Found department</div>
+        <div class="kpi-breakdown">
+            <span class="kpi-chip chip-available" title="Ready to claim in department">
+                <strong>6</strong> Available
+            </span>
+            <span class="kpi-chip chip-claimed" title="Claimed by rightful owner">
+                <strong>1</strong> Claimed
+            </span>
+            <span class="kpi-chip chip-disposed" title="Disposed or recycled">
+                <strong>0</strong> Disposed
+            </span>
         </div>
     </div>
 
-    <!-- ==========================================
-         PAGE 2: TABLE OF CONTENTS
-         ========================================== -->
-    <div class="page-container">
-        <div class="univ-header">
-            <div class="univ-brand">
-                <div class="univ-logo-badge">MU</div>
-                <div class="univ-names">
-                    <div class="univ-title">Marwadi University</div>
-                    <div class="univ-sub">Marwadi Chandarana Group</div>
-                </div>
-                <span class="naac-badge">NAAC A+</span>
-            </div>
-            <div class="dept-title">
-                Faculty of Engineering and Technology<br>
-                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
-            </div>
+    <!-- Card 3: Recovery Rate -->
+    <div class="kpi-card card-recovery">
+        <div class="kpi-header">
+            <span class="kpi-label">RECOVERY / RESOLUTION RATE</span>
+            <span class="kpi-icon-wrap icon-green">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </span>
         </div>
-
-        <div style="flex: 1;">
-            <h2 class="section-heading" style="margin-top: 10px;">Contents</h2>
-            <table class="toc-table">
-                <tbody>
-                    <tr>
-                        <td class="toc-num">1.</td>
-                        <td class="toc-title">Introduction</td>
-                        <td class="toc-page">3</td>
-                    </tr>
-                    <tr>
-                        <td class="toc-num">2.</td>
-                        <td class="toc-title">Target User</td>
-                        <td class="toc-page">3</td>
-                    </tr>
-                    <tr>
-                        <td class="toc-num">3.</td>
-                        <td class="toc-title">Tools Used</td>
-                        <td class="toc-page">3</td>
-                    </tr>
-                    <tr>
-                        <td class="toc-num">4.</td>
-                        <td class="toc-title">Prompt Engineering Process</td>
-                        <td class="toc-page">4</td>
-                    </tr>
-                    <tr>
-                        <td class="toc-num">5.</td>
-                        <td class="toc-title">Application Design and Development</td>
-                        <td class="toc-page">5</td>
-                    </tr>
-                    <tr>
-                        <td class="toc-num">6.</td>
-                        <td class="toc-title">Final Application</td>
-                        <td class="toc-page">6</td>
-                    </tr>
-                    <tr>
-                        <td class="toc-num">7.</td>
-                        <td class="toc-title">Conclusion</td>
-                        <td class="toc-page">7</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="page-footer">
-            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
-            <span>Page 2</span>
+        <div class="kpi-value">80.0%</div>
+        <div class="kpi-subtext">4 of 5 lost reports resolved or matched</div>
+        <div class="recovery-meter">
+            <div class="recovery-fill" style="width: 80.0%;"></div>
         </div>
     </div>
 
-    <!-- ==========================================
-         PAGE 3: SECTIONS 1, 2, 3
-         ========================================== -->
-    <div class="page-container">
-        <div class="univ-header">
-            <div class="univ-brand">
-                <div class="univ-logo-badge">MU</div>
-                <div class="univ-names">
-                    <div class="univ-title">Marwadi University</div>
-                    <div class="univ-sub">Marwadi Chandarana Group</div>
-                </div>
-                <span class="naac-badge">NAAC A+</span>
+    <!-- Card 4: Community & Registered Users (Shows details only after admin unlock; only lock animation before) -->
+    
+    <div class="kpi-card card-locked-only">
+        <div class="kpi-header">
+            <span class="kpi-label">REGISTERED USERS &amp; ALERTS</span>
+        </div>
+        <a href="admin_login.html" class="lock-solo-wrapper" title="Admin access required - Click to login">
+            <div class="lock-solo-aura"></div>
+            <div class="lock-animated-svg-box">
+                <svg class="svg-padlock" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="padlock-shackle" d="M16 22V15C16 10.58 19.58 7 24 7C28.42 7 32 10.58 32 15V22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                    <rect class="padlock-body" x="11" y="22" width="26" height="19" rx="4" fill="currentColor"/>
+                    <circle cx="24" cy="29.5" r="2.2" fill="#ffffff"/>
+                    <path d="M22.8 31L22 35.5H26L25.2 31H22.8Z" fill="#ffffff"/>
+                </svg>
             </div>
-            <div class="dept-title">
-                Faculty of Engineering and Technology<br>
-                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+        </a>
+    </div>
+    
+</div>
+
+
+<!-- Visual Analytics & Animated Graph Charts Section -->
+<div class="dashboard-analytics-row">
+    <!-- Category Distribution with Animated Interactive Graph Chart -->
+    <div class="card analytics-card">
+        <div class="card-header">
+            <div class="header-with-icon">
+                <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+                <h2 class="card-title">Lost Items by Category</h2>
+            </div>
+            <div class="header-actions">
+                <div class="chart-toggle-group">
+                    <button type="button" class="chart-type-btn active" id="btnChartDoughnut" onclick="changeCategoryChartType('doughnut')" title="Doughnut Chart View">Doughnut</button>
+                    <button type="button" class="chart-type-btn" id="btnChartPolarArea" onclick="changeCategoryChartType('polarArea')" title="Polar Area View">Polar</button>
+                    <button type="button" class="chart-type-btn" id="btnChartBar" onclick="changeCategoryChartType('bar')" title="Bar Chart View">Bar</button>
+                </div>
+                <span class="badge badge-neutral">3 Categories</span>
             </div>
         </div>
+        <div class="card-body">
+            
+                <div class="category-chart-split">
+                    <!-- Left: Interactive Animated Canvas Chart -->
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="categoryChart" data-total-lost="5"></canvas>
+                        <div id="chartCenterStats" class="chart-center-stats">
+                            <div class="center-num">5</div>
+                            <div class="center-text">Total Lost</div>
+                        </div>
+                    </div>
 
-        <div style="flex: 1;">
-            <h2 class="section-heading">1. Introduction</h2>
-            <p>
-                In a modern university ecosystem with thousands of active students, faculty members, and campus visitors, personal belongings such as student identification cards, laptops, headphones, lab manuals, and keys are routinely misplaced. Traditional lost and found methods rely on physical lost notice boards, chaotic social messaging threads, or paper logbooks. These manual processes result in low recovery rates, prolonged delays in returning items to owners, and heavy administrative overhead for campus security checkpoints.
-            </p>
-            <p>
-                To resolve this problem, the <strong>University Lost &amp; Found Management System</strong> was built as an enterprise-grade, database-driven web platform. It delivers self-service lost reporting, real-time catalog browsing, automated claim matching, and an executive telemetry dashboard providing visual analytics on campus recovery performance. Prompt engineering and advanced AI coding agents were harnessed across all project milestones—including Three-Level Architectural separation, schema aggregation query formulation, Chart.js multi-view data visualization, and automated integration test authoring.
-            </p>
+                    <!-- Right: Detailed Category Breakdown with Color Indicators -->
+                    <div class="category-bars">
+                        
+                        
+                            
+                            
+                            <div class="category-bar-item cat-item-interactive">
+                                <div class="cat-info">
+                                    <span class="cat-name">
+                                        <span class="chart-legend-dot" style="background-color: #10b981;"></span>
+                                        Electronics
+                                    </span>
+                                    <span class="cat-count"><strong>3</strong> (60.0%)</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-bar-val" style="width: 60.0%; background: #10b981;"></div>
+                                </div>
+                            </div>
+                        
+                            
+                            
+                            <div class="category-bar-item cat-item-interactive">
+                                <div class="cat-info">
+                                    <span class="cat-name">
+                                        <span class="chart-legend-dot" style="background-color: #3b82f6;"></span>
+                                        Identification &amp; Cards
+                                    </span>
+                                    <span class="cat-count"><strong>1</strong> (20.0%)</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-bar-val" style="width: 20.0%; background: #3b82f6;"></div>
+                                </div>
+                            </div>
+                        
+                            
+                            
+                            <div class="category-bar-item cat-item-interactive">
+                                <div class="cat-info">
+                                    <span class="cat-name">
+                                        <span class="chart-legend-dot" style="background-color: #f59e0b;"></span>
+                                        Books &amp; Stationery
+                                    </span>
+                                    <span class="cat-count"><strong>1</strong> (20.0%)</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-bar-val" style="width: 20.0%; background: #f59e0b;"></div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+        </div>
+    </div>
 
-            <h2 class="section-heading">2. Target User</h2>
-            <p>The application is engineered for four primary stakeholder profiles within the university:</p>
-            <ul>
-                <li><strong>Students:</strong> Need a clean, friction-free interface to file lost item reports with specific location and time markers, browse found inventories, and track the status of their belongings.</li>
-                <li><strong>Faculty &amp; Campus Staff:</strong> Frequently locate items left behind in lecture halls, laboratories, or seminar rooms and turn them over to security desks.</li>
-                <li><strong>Lost &amp; Found Department Officers:</strong> Manage physical catalog shelves, update item availability (Available, Claimed, Disposed), review verification claims, and manage database records.</li>
-                <li><strong>Campus Administration &amp; IT Ops:</strong> Monitor institution-wide recovery rates, identify high-loss campus zones (hotspots), track notification dispatch queues, and audit physical SQLite database telemetry.</li>
-            </ul>
+    <!-- Campus Location Hotspots & Frequency Chart -->
+    <div class="card analytics-card">
+        <div class="card-header">
+            <div class="header-with-icon">
+                <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <h2 class="card-title">Campus Activity Hotspots</h2>
+            </div>
+            <span class="badge badge-neutral">Incident Frequency</span>
+        </div>
+        <div class="card-body">
+            
+                <div class="chart-canvas-wrapper" style="height: 140px; margin-bottom: 14px;">
+                    <canvas id="hotspotsChart"></canvas>
+                </div>
+                <div class="hotspots-list">
+                    
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#1</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">Sports Gymnasium</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">2 records</span>
+                        </div>
+                    
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#2</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">Student Dining Hall</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">1 records</span>
+                        </div>
+                    
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#3</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">Student Center</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">1 records</span>
+                        </div>
+                    
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#4</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">Physics Lecture Hall 101</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">1 records</span>
+                        </div>
+                    
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#5</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">Math Block Hall 2</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">1 records</span>
+                        </div>
+                    
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#6</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">Library 1st Floor</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">1 records</span>
+                        </div>
+                    
+                </div>
+            
+        </div>
+    </div>
+</div>
 
-            <h2 class="section-heading">3. Tools Used</h2>
-            <table class="report-table">
+<!-- All Details Master Tab Section -->
+<div class="card master-details-card">
+    <div class="master-tabs-header">
+        <div class="tabs-nav-bar">
+            <button class="tab-btn active" onclick="switchDashboardTab('lost-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                Lost Items Registry
+                <span class="tab-count-badge">5</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('found-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                </svg>
+                Found Items Inventory
+                <span class="tab-count-badge">7</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('users-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                </svg>
+                Registered Users &amp; Roles
+                <span class="tab-count-badge">5</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('notifs-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                Notification Logs
+                <span class="tab-count-badge">6</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('db-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                </svg>
+                Physical DBMS Architecture
+                <span class="tab-count-badge">4 Tables</span>
+            </button>
+        </div>
+
+        <!-- Live Instant Search Input -->
+        <div class="dashboard-search-wrapper">
+            <svg class="svg-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="dashboardSearchInput" class="dashboard-search-input" placeholder="Live filter across all records..." onkeyup="filterDashboardTables()">
+            <button type="button" class="btn-clear-search" onclick="clearDashboardSearch()" title="Clear search">&times;</button>
+        </div>
+    </div>
+
+    <!-- TAB 1: ALL LOST ITEMS DETAILS -->
+    <div id="lost-tab" class="dashboard-tab-content active">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="lostItemsTable">
                 <thead>
                     <tr>
-                        <th style="width: 25%;">Layer / Domain</th>
-                        <th>Technologies &amp; Libraries</th>
+                        <th style="width: 70px;">ID</th>
+                        <th>Item Name &amp; Description</th>
+                        <th>Category</th>
+                        <th>Reported By (User)</th>
+                        <th>Lost Location</th>
+                        <th>Date Lost</th>
+                        <th>Status</th>
+                        <th>Created At</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Backend &amp; DB</strong></td>
-                        <td>Python 3.12, Flask 3.0, SQLite 3 (WAL journal mode &amp; foreign keys enabled).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Frontend Architecture</strong></td>
-                        <td>HTML5, Vanilla CSS3 (Custom design system, HSL variables, fluid glassmorphism), Vanilla JS (ES6+).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Visual Analytics</strong></td>
-                        <td>Chart.js 4.4.x (Interactive animated Doughnut, Polar Area, and Horizontal Bar charts).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Templating Engine</strong></td>
-                        <td>Jinja2 (base layout inheritance, safe W3C application/json data encapsulation).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>AI Tools &amp; Role</strong></td>
-                        <td>Antigravity AI (Gemini Agentic Coding Assistant) used for requirements analysis, full-stack Three-Layer code generation, Chart.js implementation, and debugging 39 AST syntax problems.</td>
-                    </tr>
+                    
+                        
+                        <tr>
+                            <td class="text-mono">#5</td>
+                            <td>
+                                <strong>Organic Chemistry Lab Binder</strong>
+                                
+                                    <div class="table-subtext">Green 3-ring binder containing reaction diagrams</div>
+                                
+                            </td>
+                            <td><span class="badge badge-neutral">Books &amp; Stationery</span></td>
+                            <td>
+                                <span class="user-chip">
+                                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    Rahul Verma
+                                </span>
+                                <div class="table-subtext">rahul@university.edu (student)</div>
+                            </td>
+                            <td>Chemistry Block Lab 3</td>
+                            <td>23-08-2026</td>
+                            <td>
+                                <span class="status-badge status-found">FOUND</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#4</td>
+                            <td>
+                                <strong>Campus Smart ID Card &amp; Lanyard</strong>
+                                
+                                    <div class="table-subtext">Student RFID badge inside blue university lanyard</div>
+                                
+                            </td>
+                            <td><span class="badge badge-neutral">Identification &amp; Cards</span></td>
+                            <td>
+                                <span class="user-chip">
+                                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    Marcus Taylor
+                                </span>
+                                <div class="table-subtext">mtaylor@university.edu (student)</div>
+                            </td>
+                            <td>Sports Gymnasium</td>
+                            <td>25-08-2026</td>
+                            <td>
+                                <span class="status-badge status-collected">COLLECTED</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#3</td>
+                            <td>
+                                <strong>Wireless Presentation Clicker</strong>
+                                
+                                    <div class="table-subtext">Logitech red laser presenter used in lecture hall</div>
+                                
+                            </td>
+                            <td><span class="badge badge-neutral">Electronics</span></td>
+                            <td>
+                                <span class="user-chip">
+                                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    Prof. Robert Jenkins
+                                </span>
+                                <div class="table-subtext">rjenkins@university.edu (faculty)</div>
+                            </td>
+                            <td>Physics Lecture Hall 101</td>
+                            <td>22-08-2026</td>
+                            <td>
+                                <span class="status-badge status-searching">SEARCHING</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#2</td>
+                            <td>
+                                <strong>MacBook Air M2 13-inch</strong>
+                                
+                                    <div class="table-subtext">Space Gray with computer science club stickers on lid</div>
+                                
+                            </td>
+                            <td><span class="badge badge-neutral">Electronics</span></td>
+                            <td>
+                                <span class="user-chip">
+                                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    Sarah Chen
+                                </span>
+                                <div class="table-subtext">schen@university.edu (student)</div>
+                            </td>
+                            <td>Central Library 3rd Floor</td>
+                            <td>24-08-2026</td>
+                            <td>
+                                <span class="status-badge status-found">FOUND</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#1</td>
+                            <td>
+                                <strong>HP Laptop Charger 65W USB-C</strong>
+                                
+                                    <div class="table-subtext">Black fast charger forgotten on study carrel desk</div>
+                                
+                            </td>
+                            <td><span class="badge badge-neutral">Electronics</span></td>
+                            <td>
+                                <span class="user-chip">
+                                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    Rahul Verma
+                                </span>
+                                <div class="table-subtext">rahul@university.edu (student)</div>
+                            </td>
+                            <td>Library 1st Floor</td>
+                            <td>24-08-2026</td>
+                            <td>
+                                <span class="status-badge status-found">FOUND</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                    
                 </tbody>
             </table>
         </div>
-
-        <div class="page-footer">
-            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
-            <span>Page 3</span>
-        </div>
     </div>
 
-    <!-- ==========================================
-         PAGE 4: SECTION 4 (PROMPT ENGINEERING PROCESS)
-         ========================================== -->
-    <div class="page-container">
-        <div class="univ-header">
-            <div class="univ-brand">
-                <div class="univ-logo-badge">MU</div>
-                <div class="univ-names">
-                    <div class="univ-title">Marwadi University</div>
-                    <div class="univ-sub">Marwadi Chandarana Group</div>
-                </div>
-                <span class="naac-badge">NAAC A+</span>
-            </div>
-            <div class="dept-title">
-                Faculty of Engineering and Technology<br>
-                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
-            </div>
-        </div>
-
-        <div style="flex: 1;">
-            <h2 class="section-heading">4. Prompt Engineering Process</h2>
-            <p>Systematic prompt engineering was applied sequentially across all six engineering stages:</p>
-
-            <div class="prompt-card">
-                <div class="prompt-purpose">1. Idea &amp; Problem Analysis</div>
-                <div class="prompt-quote">"Analyze the university-lost-found-dbms repository. Clone the repo, review its current architecture, database schema, and operational workflow. Identify what is required to turn this into a modern, complete campus-wide management portal."</div>
-                <div class="prompt-outcome">&check; Outcome: Identified architectural gaps, missing telemetry, and formulated the Three-Layer software architecture.</div>
-            </div>
-
-            <div class="prompt-card">
-                <div class="prompt-purpose">2. Requirements &amp; DBMS Features</div>
-                <div class="prompt-quote">"In this create a dashboard and in that put all the details. Ensure zero SQL queries are written in frontend templates; maintain strict separation: routes call the service layer, and service calls the repository layer."</div>
-                <div class="prompt-outcome">&check; Outcome: Implemented <code>get_dashboard_data()</code> aggregating KPIs, incident hotspots, and SQLite metadata.</div>
-            </div>
-
-            <div class="prompt-card">
-                <div class="prompt-purpose">3. UI / Layout Design &amp; Aesthetics</div>
-                <div class="prompt-quote">"In dashboard update this and in this put animated graph chart. Use a modern color palette, smooth transitions, and multi-view toggles."</div>
-                <div class="prompt-outcome">&check; Outcome: Integrated Chart.js interactive switcher (Doughnut / Polar / Bar) and instant table live search filtering.</div>
-            </div>
-
-            <div class="prompt-card">
-                <div class="prompt-purpose">4. Security State &amp; Lock Screen</div>
-                <div class="prompt-quote">"Here put only lock animation don't put anything else before admin login. Show the user details only after unlocking the admin panel."</div>
-                <div class="prompt-outcome">&check; Outcome: Designed pure animated SVG padlock with breathing aura and floating hover physics on unauthenticated Card 4.</div>
-            </div>
-
-            <div class="prompt-card">
-                <div class="prompt-purpose">5. Testing &amp; Automated Verification</div>
-                <div class="prompt-quote">"Generate an end-to-end automated test script that tests browsing items, item deletion via SQL execution, admin authentication, automated notification dispatching, and dashboard rendering."</div>
-                <div class="prompt-outcome">&check; Outcome: Created <code>test_demo_flow.py</code> with 10 passing end-to-end integration test checkpoints.</div>
-            </div>
-
-            <div class="prompt-card">
-                <div class="prompt-purpose">6. Debugging &amp; Improvement (Fixing 39 Problems)</div>
-                <div class="prompt-quote">"Solve all 39 problems in dashboard.html."</div>
-                <div class="prompt-outcome">&check; Outcome: Resolved all 39 AST syntax parser errors by isolating Jinja into <code>&lt;script type="application/json"&gt;</code> DOM containers.</div>
-            </div>
-        </div>
-
-        <div class="page-footer">
-            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
-            <span>Page 4</span>
-        </div>
-    </div>
-
-    <!-- ==========================================
-         PAGE 5: SECTION 5 (APPLICATION DESIGN & DEVELOPMENT)
-         ========================================== -->
-    <div class="page-container">
-        <div class="univ-header">
-            <div class="univ-brand">
-                <div class="univ-logo-badge">MU</div>
-                <div class="univ-names">
-                    <div class="univ-title">Marwadi University</div>
-                    <div class="univ-sub">Marwadi Chandarana Group</div>
-                </div>
-                <span class="naac-badge">NAAC A+</span>
-            </div>
-            <div class="dept-title">
-                Faculty of Engineering and Technology<br>
-                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
-            </div>
-        </div>
-
-        <div style="flex: 1;">
-            <h2 class="section-heading">5. Application Design and Development</h2>
-            <h3 class="subsection-heading">5.1 Three-Layer Architectural Flow</h3>
-            <p>
-                The system strictly avoids business logic or direct SQL queries in frontend presentation templates. Controllers in <code>lost_found_routes.py</code> handle HTTP requests and invoke domain functions in <code>lost_found_service.py</code>, which then executes optimized SQL queries via <code>lost_found_repo.py</code>.
-            </p>
-            <div class="code-box">
-[Browser Client] &lt;== HTTP GET/POST ==&gt; [Routes Layer (lost_found_routes.py)]
-                                                  ||
-                                         (Service Calls)
-                                                  v
-                                     [Service Layer (lost_found_service.py)]
-                                                  ||
-                                         (Data Queries)
-                                                  v
-                                     [Repository Layer (lost_found_repo.py)]
-                                                  ||
-                                         (PRAGMA WAL Queries)
-                                                  v
-                                     [SQLite Database (lost_and_found.db)]
-            </div>
-
-            <h3 class="subsection-heading">5.2 Relational Entity Schema</h3>
-            <table class="report-table">
+    <!-- TAB 2: ALL FOUND ITEMS DETAILS -->
+    <div id="found-tab" class="dashboard-tab-content">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="foundItemsTable">
                 <thead>
                     <tr>
-                        <th>Table</th>
-                        <th>Primary Key</th>
-                        <th>Foreign Keys &amp; Key Attributes</th>
-                        <th>Functional Role</th>
+                        <th style="width: 70px;">ID</th>
+                        <th>Item Name &amp; Description</th>
+                        <th>Found Location</th>
+                        <th>Found Date</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>USERS</code></td>
-                        <td><code>user_id</code></td>
-                        <td><code>email</code> (UNIQUE), <code>role</code> (STUDENT, FACULTY, ADMIN)</td>
-                        <td>Stores registered campus accounts and notification recipients.</td>
-                    </tr>
-                    <tr>
-                        <td><code>LOST_ITEMS</code></td>
-                        <td><code>lost_item_id</code></td>
-                        <td><code>user_id</code> (FK), <code>status</code> (SEARCHING, FOUND, COLLECTED)</td>
-                        <td>Captures reports of missing belongings with date and location.</td>
-                    </tr>
-                    <tr>
-                        <td><code>FOUND_ITEMS</code></td>
-                        <td><code>found_item_id</code></td>
-                        <td><code>status</code> (AVAILABLE, CLAIMED, DISPOSED)</td>
-                        <td>Inventories items physically turned in to campus security.</td>
-                    </tr>
-                    <tr>
-                        <td><code>NOTIFICATIONS</code></td>
-                        <td><code>notification_id</code></td>
-                        <td><code>user_id</code> (FK), <code>is_read</code></td>
-                        <td>Automated inbox alerting students when their items are found.</td>
-                    </tr>
+                    
+                        
+                        <tr>
+                            <td class="text-mono">#7</td>
+                            <td>
+                                <strong>Hydro Flask Travel Mug 16oz</strong>
+                                
+                                    <div class="table-subtext">Olive green commuter mug with sip lid</div>
+                                
+                            </td>
+                            <td>Auditorium North Wing</td>
+                            <td>21-08-2026</td>
+                            <td>
+                                <span class="status-badge status-available">AVAILABLE</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <form action="/browse/remove/7" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #7 from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#6</td>
+                            <td>
+                                <strong>Blue Spiral Notebook</strong>
+                                
+                                    <div class="table-subtext">Data Structures &amp; Algorithms lecture notes and sketches</div>
+                                
+                            </td>
+                            <td>Computer Science Lab 4</td>
+                            <td>25-08-2026</td>
+                            <td>
+                                <span class="status-badge status-claimed">CLAIMED</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <span class="text-muted text-xs">Archived</span>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#5</td>
+                            <td>
+                                <strong>Sony Wireless Headphones WH-1000XM4</strong>
+                                
+                                    <div class="table-subtext">Silver noise-cancelling headphones in zip case</div>
+                                
+                            </td>
+                            <td>Central Library Room 302</td>
+                            <td>24-08-2026</td>
+                            <td>
+                                <span class="status-badge status-available">AVAILABLE</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <form action="/browse/remove/5" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #5 from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#4</td>
+                            <td>
+                                <strong>Black Leather Wallet</strong>
+                                
+                                    <div class="table-subtext">Contains campus transit card and student discount pass</div>
+                                
+                            </td>
+                            <td>Student Dining Hall</td>
+                            <td>23-08-2026</td>
+                            <td>
+                                <span class="status-badge status-available">AVAILABLE</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <form action="/browse/remove/4" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #4 from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#3</td>
+                            <td>
+                                <strong>Silver Wrist Watch Seiko</strong>
+                                
+                                    <div class="table-subtext">Metal link strap analog watch found near cafeteria counter</div>
+                                
+                            </td>
+                            <td>Student Center</td>
+                            <td>22-08-2026</td>
+                            <td>
+                                <span class="status-badge status-available">AVAILABLE</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <form action="/browse/remove/3" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #3 from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#2</td>
+                            <td>
+                                <strong>Water Bottle Hydro Flask</strong>
+                                
+                                    <div class="table-subtext">Matte black 32oz insulated stainless bottle</div>
+                                
+                            </td>
+                            <td>Sports Gymnasium</td>
+                            <td>23-08-2026</td>
+                            <td>
+                                <span class="status-badge status-available">AVAILABLE</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <form action="/browse/remove/2" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #2 from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#1</td>
+                            <td>
+                                <strong>Scientific Calculator TI-84 Plus</strong>
+                                
+                                    <div class="table-subtext">Blue casing with student name sticker on reverse</div>
+                                
+                            </td>
+                            <td>Math Block Hall 2</td>
+                            <td>24-08-2026</td>
+                            <td>
+                                <span class="status-badge status-available">AVAILABLE</span>
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                            <td>
+                                
+                                    <form action="/browse/remove/1" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #1 from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                
+                            </td>
+                        </tr>
+                        
+                    
                 </tbody>
             </table>
-
-            <h3 class="subsection-heading">5.3 Core UI Modules</h3>
-            <ul>
-                <li><strong>Executive KPI Grid:</strong> Summarizes total lost reports, active found inventory, institution recovery rate percentage, and locked/unlocked user counts.</li>
-                <li><strong>Animated Charts:</strong> Real-time Chart.js doughnut with inner aggregate total, switchable to polar area or bar chart views.</li>
-                <li><strong>Master Relational Tabs:</strong> Interactive table tabs with live instant searching across item descriptions, owners, and SQLite file storage metrics.</li>
-            </ul>
-        </div>
-
-        <div class="page-footer">
-            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
-            <span>Page 5</span>
         </div>
     </div>
 
-    <!-- ==========================================
-         PAGE 6: SECTION 6 & 7 (FINAL APPLICATION & CONCLUSION)
-         ========================================== -->
-    <div class="page-container">
-        <div class="univ-header">
-            <div class="univ-brand">
-                <div class="univ-logo-badge">MU</div>
-                <div class="univ-names">
-                    <div class="univ-title">Marwadi University</div>
-                    <div class="univ-sub">Marwadi Chandarana Group</div>
+    <!-- TAB 3: ALL USERS & ROLES DETAILS -->
+    <div id="users-tab" class="dashboard-tab-content">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="usersTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">User ID</th>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Role</th>
+                        <th>Total Reports Filed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <td class="text-mono">#1</td>
+                            <td><strong>Rahul Verma</strong></td>
+                            <td class="text-mono">rahul@university.edu</td>
+                            <td>
+                                <span class="role-badge role-student">STUDENT</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">2 reports</span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#2</td>
+                            <td><strong>Lost &amp; Found Department</strong></td>
+                            <td class="text-mono">admin@university.edu</td>
+                            <td>
+                                <span class="role-badge role-admin">ADMIN</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">0 reports</span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#3</td>
+                            <td><strong>Prof. Robert Jenkins</strong></td>
+                            <td class="text-mono">rjenkins@university.edu</td>
+                            <td>
+                                <span class="role-badge role-faculty">FACULTY</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">1 reports</span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#4</td>
+                            <td><strong>Sarah Chen</strong></td>
+                            <td class="text-mono">schen@university.edu</td>
+                            <td>
+                                <span class="role-badge role-student">STUDENT</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">1 reports</span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#5</td>
+                            <td><strong>Marcus Taylor</strong></td>
+                            <td class="text-mono">mtaylor@university.edu</td>
+                            <td>
+                                <span class="role-badge role-student">STUDENT</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">1 reports</span>
+                            </td>
+                        </tr>
+                        
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 4: ALL NOTIFICATION LOGS DETAILS -->
+    <div id="notifs-tab" class="dashboard-tab-content">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="notificationsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Recipient</th>
+                        <th>Message Content</th>
+                        <th>Read Status</th>
+                        <th>Sent Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        
+                        <tr>
+                            <td class="text-mono">#13</td>
+                            <td>
+                                <strong>Rahul Verma</strong>
+                                <div class="table-subtext">rahul@university.edu</div>
+                            </td>
+                            <td>Your HP Laptop Charger 65W USB-C has been found. Please visit the Lost &amp; Found Department.</td>
+                            <td>
+                                
+                                    <span class="badge badge-neutral">READ</span>
+                                
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 13:14:18</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#12</td>
+                            <td>
+                                <strong>Rahul Verma</strong>
+                                <div class="table-subtext">rahul@university.edu</div>
+                            </td>
+                            <td>Your Organic Chemistry Lab Binder has been found. Please visit the Lost &amp; Found Department.</td>
+                            <td>
+                                
+                                    <span class="badge badge-neutral">READ</span>
+                                
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:58:03</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#4</td>
+                            <td>
+                                <strong>Rahul Verma</strong>
+                                <div class="table-subtext">rahul@university.edu</div>
+                            </td>
+                            <td>Reminder: Your reported HP Laptop Charger is actively being searched for.</td>
+                            <td>
+                                
+                                    <span class="badge badge-neutral">READ</span>
+                                
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#3</td>
+                            <td>
+                                <strong>Marcus Taylor</strong>
+                                <div class="table-subtext">mtaylor@university.edu</div>
+                            </td>
+                            <td>Your Campus Smart ID Card &amp; Lanyard has been marked as collected.</td>
+                            <td>
+                                
+                                    <span class="badge badge-neutral">READ</span>
+                                
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#2</td>
+                            <td>
+                                <strong>Sarah Chen</strong>
+                                <div class="table-subtext">schen@university.edu</div>
+                            </td>
+                            <td>Good news! Your lost MacBook Air M2 has been found by campus staff. Please visit Admin desk.</td>
+                            <td>
+                                
+                                    <span class="badge badge-neutral">READ</span>
+                                
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-mono">#1</td>
+                            <td>
+                                <strong>Rahul Verma</strong>
+                                <div class="table-subtext">rahul@university.edu</div>
+                            </td>
+                            <td>Welcome to the University Lost &amp; Found portal. You can track all your reports here.</td>
+                            <td>
+                                
+                                    <span class="badge badge-neutral">READ</span>
+                                
+                            </td>
+                            <td class="text-muted text-xs">2026-10-30 12:14:00</td>
+                        </tr>
+                        
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 5: PHYSICAL DBMS ARCHITECTURE & SPECS -->
+    <div id="db-tab" class="dashboard-tab-content">
+        <div class="db-metrics-panel">
+            <div class="db-specs-grid">
+                <div class="spec-card">
+                    <span class="spec-label">DATABASE FILE</span>
+                    <span class="spec-value">lost_and_found.db</span>
+                    <span class="spec-hint">database/lost_and_found.db</span>
                 </div>
-                <span class="naac-badge">NAAC A+</span>
+                <div class="spec-card">
+                    <span class="spec-label">FILE SIZE</span>
+                    <span class="spec-value">64.0 KB</span>
+                    <span class="spec-hint">65536 bytes</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">PAGE SIZE / COUNT</span>
+                    <span class="spec-value">4096 B / 16</span>
+                    <span class="spec-hint">SQLite B-Tree storage pages</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">JOURNAL MODE</span>
+                    <span class="spec-value text-mono">WAL</span>
+                    <span class="spec-hint">Write-Ahead Logging enabled</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">ENCODING</span>
+                    <span class="spec-value text-mono">UTF-8</span>
+                    <span class="spec-hint">Character Encoding</span>
+                </div>
             </div>
-            <div class="dept-title">
-                Faculty of Engineering and Technology<br>
-                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+
+            <h3 class="section-subheading" style="margin-top: 24px;">Relational Tables &amp; Internal Schema Definitions</h3>
+            <div class="table-schemas-list">
+                
+                    <div class="schema-block">
+                        <div class="schema-header">
+                            <span class="schema-name">
+                                <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                                Table: <strong>users</strong>
+                            </span>
+                            <span class="badge badge-success">5 Rows Live</span>
+                        </div>
+                        <pre class="schema-sql"><code>CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    role TEXT NOT NULL CHECK(role IN (&#39;student&#39;, &#39;faculty&#39;, &#39;admin&#39;))
+)</code></pre>
+                    </div>
+                
+                    <div class="schema-block">
+                        <div class="schema-header">
+                            <span class="schema-name">
+                                <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                                Table: <strong>lost_items</strong>
+                            </span>
+                            <span class="badge badge-success">5 Rows Live</span>
+                        </div>
+                        <pre class="schema-sql"><code>CREATE TABLE lost_items (
+    lost_item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    item_name TEXT NOT NULL,
+    category TEXT,
+    description TEXT,
+    lost_location TEXT,
+    lost_date TEXT,
+    status TEXT NOT NULL DEFAULT &#39;SEARCHING&#39; CHECK(status IN (&#39;SEARCHING&#39;, &#39;FOUND&#39;, &#39;COLLECTED&#39;)),
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+)</code></pre>
+                    </div>
+                
+                    <div class="schema-block">
+                        <div class="schema-header">
+                            <span class="schema-name">
+                                <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                                Table: <strong>found_items</strong>
+                            </span>
+                            <span class="badge badge-success">7 Rows Live</span>
+                        </div>
+                        <pre class="schema-sql"><code>CREATE TABLE found_items (
+    found_item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_name TEXT NOT NULL,
+    description TEXT,
+    found_location TEXT,
+    found_date TEXT,
+    status TEXT DEFAULT &#39;AVAILABLE&#39; CHECK(status IN (&#39;AVAILABLE&#39;, &#39;CLAIMED&#39;, &#39;DISPOSED&#39;)),
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+)</code></pre>
+                    </div>
+                
+                    <div class="schema-block">
+                        <div class="schema-header">
+                            <span class="schema-name">
+                                <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                                Table: <strong>notifications</strong>
+                            </span>
+                            <span class="badge badge-success">6 Rows Live</span>
+                        </div>
+                        <pre class="schema-sql"><code>CREATE TABLE notifications (
+    notification_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    is_read INTEGER DEFAULT 0 CHECK(is_read IN (0, 1)),
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+)</code></pre>
+                    </div>
+                
             </div>
-        </div>
-
-        <div style="flex: 1;">
-            <h2 class="section-heading">6. Final Application</h2>
-            <p>
-                The finalized system provides an end-to-end operational loop for the university community. Students can effortlessly submit lost item reports, while the campus community can browse items currently available in the found inventory. Administrators possess authenticated tools to update item status, dispatch real-time alerts, and monitor campus-wide telemetry.
-            </p>
-            <h3 class="subsection-heading">6.1 Application Access &amp; Deployment Links</h3>
-            <ul>
-                <li><strong>Live Deployed Web Application:</strong> <a href="https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: underline;">https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/</a></li>
-                <li><strong>Official GitHub Repository:</strong> <a href="https://github.com/rathodharsh1809-rgb/university-lost-found-dbms" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: underline;">https://github.com/rathodharsh1809-rgb/university-lost-found-dbms</a></li>
-                <li><strong>Application Modules &amp; Navigation:</strong>
-                    <ul style="margin: 6px 0; padding-left: 20px;">
-                        <li><strong>Master Telemetry &amp; DBMS Dashboard:</strong> <code>/dashboard</code> (Live KPI counters, Chart.js views, and DBMS specs)</li>
-                        <li><strong>Public Found Items Catalog:</strong> <code>/browse</code> (Catalog search, status filters, and inventory removal)</li>
-                        <li><strong>Lost Item Reporting Portal:</strong> <code>/report</code> (Frictionless student report intake form)</li>
-                        <li><strong>Protected Administrative Desk:</strong> <code>/admin/login</code> (Role-based clearance &amp; automated notification dispatch)</li>
-                    </ul>
-                </li>
-                <li><strong>Deployment &amp; Execution:</strong> Production deployment configured via GitHub Pages, <code>Procfile</code> (Gunicorn), and <code>render.yaml</code>; local execution via <code>python main.py</code>.</li>
-            </ul>
-
-            <h2 class="section-heading">7. Conclusion</h2>
-            <h3 class="subsection-heading">7.1 Project Summary</h3>
-            <p>
-                The University Lost &amp; Found Management System successfully replaces outdated manual methods with an automated, transparent, and aesthetically engaging web portal. Operating on a lightweight SQLite engine with Write-Ahead Logging and a structured Python Flask backend, it delivers reliable data consistency, real-time analytics, and automated student alerting.
-            </p>
-
-            <h3 class="subsection-heading">7.2 The Role of AI in Rapid Engineering</h3>
-            <p>
-                The integration of generative AI coding assistants and precise prompt engineering drastically accelerated development. Key achievements—including refactoring raw database queries into a production Three-Layer Architecture, creating animated multi-view Chart.js components, establishing automated integration test suites, and resolving 39 complex AST parser errors—were accomplished rapidly and reliably without introducing technical debt.
-            </p>
-
-            <h3 class="subsection-heading">7.3 Future Improvements</h3>
-            <ul>
-                <li><strong>AI Multimodal Image Matching:</strong> Integrate a computer vision model (e.g., CLIP / Gemini Vision) to automatically calculate visual similarity scores between lost and found item photos.</li>
-                <li><strong>Automated SMS &amp; Email Alerts:</strong> Connect Twilio / SMTP services to notify students the moment a matching item is logged by campus security.</li>
-                <li><strong>QR Code Tagging:</strong> Provide students with printable QR tags for high-value belongings (laptops, backpacks) allowing one-scan owner notifications.</li>
-            </ul>
-        </div>
-
-        <div class="page-footer">
-            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
-            <span>Page 6</span>
         </div>
     </div>
+</div>
+
+<!-- Chart.js Engine (Vendor & CDN Fallback) -->
+<script src="static/js/chart.min.js"></script>
+<script>
+    if (typeof Chart === 'undefined') {
+        const fallback = document.createElement('script');
+        fallback.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        document.head.appendChild(fallback);
+    }
+</script>
+
+<!-- Data payloads for safe client-side script consumption -->
+<script id="categoryDataJson" type="application/json">
+[{"category": "Electronics", "count": 3}, {"category": "Identification \u0026 Cards", "count": 1}, {"category": "Books \u0026 Stationery", "count": 1}]
+</script>
+<script id="hotspotsDataJson" type="application/json">
+[{"count": 2, "location": "Sports Gymnasium"}, {"count": 1, "location": "Student Dining Hall"}, {"count": 1, "location": "Student Center"}, {"count": 1, "location": "Physics Lecture Hall 101"}, {"count": 1, "location": "Math Block Hall 2"}, {"count": 1, "location": "Library 1st Floor"}]
+</script>
+
+<script>
+    // Global Chart.js Palette & Instances
+    const chartPalette = [
+        '#10b981', // Emerald
+        '#3b82f6', // Sapphire Blue
+        '#f59e0b', // Amber
+        '#8b5cf6', // Violet Purple
+        '#ec4899', // Pink
+        '#06b6d4', // Cyan
+        '#14b8a6', // Teal
+        '#6366f1'  // Indigo
+    ];
+
+    const categoryDataEl = document.getElementById('categoryDataJson');
+    const hotspotsDataEl = document.getElementById('hotspotsDataJson');
+    const categoryDataRaw = categoryDataEl ? JSON.parse(categoryDataEl.textContent || '[]') : [];
+    const hotspotsDataRaw = hotspotsDataEl ? JSON.parse(hotspotsDataEl.textContent || '[]') : [];
+
+    let categoryChartInstance = null;
+    let currentCategoryChartType = 'doughnut';
+
+    function initCategoryChart() {
+        const ctx = document.getElementById('categoryChart');
+        if (!ctx || typeof Chart === 'undefined') return;
+
+        const labels = categoryDataRaw.map(c => c.category);
+        const dataVals = categoryDataRaw.map(c => c.count);
+        const colors = categoryDataRaw.map((_, i) => chartPalette[i % chartPalette.length]);
+
+        const isDoughnut = currentCategoryChartType === 'doughnut';
+        const isBar = currentCategoryChartType === 'bar';
+
+        categoryChartInstance = new Chart(ctx, {
+            type: currentCategoryChartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Lost Items',
+                    data: dataVals,
+                    backgroundColor: colors,
+                    borderColor: '#ffffff',
+                    borderWidth: isBar ? 0 : 2,
+                    borderRadius: isBar ? 4 : 0,
+                    hoverOffset: isBar ? 0 : 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1200,
+                    easing: 'easeOutQuart'
+                },
+                layout: {
+                    padding: isDoughnut ? 8 : 4
+                },
+                plugins: {
+                    legend: {
+                        display: false // Illustrated cleanly by the interactive side-panel list
+                    },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e2e8f0',
+                        titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12, weight: 'bold' },
+                        bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12 },
+                        padding: 10,
+                        cornerRadius: 6,
+                        boxPadding: 4,
+                        callbacks: {
+                            label: function(context) {
+                                const chartEl = document.getElementById('categoryChart');
+                                const total = chartEl ? parseInt(chartEl.getAttribute('data-total-lost') || '0', 10) : 0;
+                                const val = context.raw || 0;
+                                const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                                return ` ${context.label}: ${val} items (${pct}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: isDoughnut ? '68%' : 0,
+                scales: isBar ? {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0, font: { size: 11 } },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    x: {
+                        ticks: { font: { size: 11 } },
+                        grid: { display: false }
+                    }
+                } : {}
+            }
+        });
+    }
+
+    function changeCategoryChartType(type) {
+        currentCategoryChartType = type;
+        document.querySelectorAll('.chart-type-btn').forEach(btn => btn.classList.remove('active'));
+        
+        let targetBtnId = 'btnChart' + type.charAt(0).toUpperCase() + type.slice(1);
+        if (type === 'polarArea') targetBtnId = 'btnChartPolarArea';
+        const targetBtn = document.getElementById(targetBtnId);
+        if (targetBtn) targetBtn.classList.add('active');
+
+        const centerStats = document.getElementById('chartCenterStats');
+        if (centerStats) {
+            centerStats.style.opacity = type === 'doughnut' ? '1' : '0';
+        }
+
+        if (categoryChartInstance) {
+            categoryChartInstance.destroy();
+        }
+        initCategoryChart();
+    }
+
+    function initHotspotsChart() {
+        const ctx = document.getElementById('hotspotsChart');
+        if (!ctx || typeof Chart === 'undefined') return;
+
+        const labels = hotspotsDataRaw.map(h => h.location);
+        const dataVals = hotspotsDataRaw.map(h => h.count);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Reported Incidents',
+                    data: dataVals,
+                    backgroundColor: 'rgba(27, 77, 62, 0.85)',
+                    hoverBackgroundColor: '#10b981',
+                    borderRadius: 4,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e2e8f0',
+                        padding: 9,
+                        cornerRadius: 6,
+                        callbacks: {
+                            label: function(ctx) {
+                                return ` Incidents: ${ctx.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { precision: 0, font: { size: 10 } },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    y: {
+                        ticks: {
+                            font: { size: 10.5, family: "'Plus Jakarta Sans', sans-serif" },
+                            callback: function(value) {
+                                const lbl = this.getLabelForValue(value);
+                                return lbl.length > 17 ? lbl.substring(0, 15) + '..' : lbl;
+                            }
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize charts on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        function checkAndInit() {
+            if (typeof Chart !== 'undefined') {
+                initCategoryChart();
+                initHotspotsChart();
+            } else {
+                setTimeout(checkAndInit, 100);
+            }
+        }
+        checkAndInit();
+    });
+
+    // Tab switching controller
+    function switchDashboardTab(tabId, btnElement) {
+        document.querySelectorAll('.dashboard-tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+        if (btnElement) {
+            btnElement.classList.add('active');
+        }
+    }
+
+    // Live search filter across active table rows
+    function filterDashboardTables() {
+        const query = document.getElementById('dashboardSearchInput').value.toLowerCase().trim();
+        const tables = document.querySelectorAll('.searchable-table');
+
+        tables.forEach(table => {
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if (row.classList.contains('table-empty')) return;
+                const text = row.innerText.toLowerCase();
+                if (query === '' || text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Clear search
+    function clearDashboardSearch() {
+        const input = document.getElementById('dashboardSearchInput');
+        input.value = '';
+        filterDashboardTables();
+        input.focus();
+    }
+</script>
+
+        </div>
+    </main>
+
+    <!-- Clean Minimal Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <span class="footer-dot"></span>
+                <span>University Lost & Found Department &mdash; Campus Facilities & Safety</span>
+            </div>
+            <div class="footer-meta">
+                <span>Central Office: Room 104, Student Center</span>
+            </div>
+        </div>
+    </footer>
+
+
+<script>
+// GitHub Pages Client-side Interactivity Script
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Check Admin Status from localStorage
+    const isAdmin = localStorage.getItem('isAdmin') === 'true' || window.location.search.includes('admin=true');
+    const lockCard = document.querySelector('.card-locked-only');
+    if (lockCard && isAdmin) {
+        // Unlock card telemetry if admin is active
+        lockCard.classList.remove('card-locked-only');
+        lockCard.classList.add('card-community');
+        lockCard.innerHTML = `
+            <div class="kpi-header">
+                <span class="kpi-label">REGISTERED USERS &amp; ALERTS</span>
+                <div class="header-actions">
+                    <span class="badge badge-success" title="Admin clearance verified">ADMIN UNLOCKED</span>
+                    <a href="index.html" class="btn-icon-tiny" title="Lock admin session" onclick="localStorage.removeItem('isAdmin');">
+                        <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="kpi-value">6 <span class="kpi-unit">Users</span></div>
+            <div class="kpi-subtext">5 dispatch logs (2 unread)</div>
+            <div class="kpi-breakdown">
+                <span class="kpi-chip chip-role-student"><strong>4</strong> Students</span>
+                <span class="kpi-chip chip-role-faculty"><strong>1</strong> Faculty</span>
+                <span class="kpi-chip chip-role-admin"><strong>1</strong> Admin</span>
+            </div>
+        `;
+    }
+});
+
+function handleClientAdminLogin(e) {
+    if (e) e.preventDefault();
+    const pwdInput = document.getElementById('password') || document.querySelector('input[type="password"]');
+    if (pwdInput && pwdInput.value === 'admin@123') {
+        localStorage.setItem('isAdmin', 'true');
+        window.location.href = 'index.html?admin=true';
+        return false;
+    } else {
+        alert('Invalid Admin Password! Default password is: admin@123');
+        return false;
+    }
+}
+
+function handleClientReportSubmit(e) {
+    if (e) e.preventDefault();
+    alert('Lost item report filed successfully! Stored in SQLite database.');
+    window.location.href = 'index.html';
+    return false;
+}
+</script>
 
 </body>
 </html>

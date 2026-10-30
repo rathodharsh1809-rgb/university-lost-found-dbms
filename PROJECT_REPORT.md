@@ -279,15 +279,12 @@ erDiagram
 4. **Admin Resolution:** Security logs in to the admin console, matches the found item against active student reports, and updates the status to `FOUND`. The student receives an instant notification.
 5. **Collection & Verification:** The student retrieves their belongings; the item status is finalized to `COLLECTED`.
 
-### 6.3 Application Links & Repository Access
-- **Live Deployed Web Application:** [https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/](https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/)
-- **Official GitHub Repository:** [https://github.com/rathodharsh1809-rgb/university-lost-found-dbms](https://github.com/rathodharsh1809-rgb/university-lost-found-dbms)
-- **Application Route Architecture:**
-  - **Master Analytics Dashboard:** `/dashboard` (Telemetry, interactive charts, and SQLite specs)
-  - **Public Inventory Catalog:** `/browse` (Search catalog & inventory actions)
-  - **Lost Item Intake Portal:** `/report` (Student reporting form)
-  - **Protected Admin Console:** `/admin/login` (Department administrative console)
-- **Deployment & Local Execution:** Production deployment configured via GitHub Pages, `Procfile` (Gunicorn), and `render.yaml`; local execution via `python main.py`.
+### 6.3 Live URLs & Access Endpoints
+- **Master Analytics Dashboard:** [https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/](https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/)
+- **Public Inventory Catalog:** [https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/browse.html](https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/browse.html)
+- **Lost Item Submission Form:** [https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/report.html](https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/report.html)
+- **Protected Admin Access:** [https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/admin_login.html](https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/admin_login.html) (Password: `admin@123`)
+- **Source Code Repository:** [https://github.com/rathodharsh1809-rgb/university-lost-found-dbms](https://github.com/rathodharsh1809-rgb/university-lost-found-dbms)
 
 ---
 

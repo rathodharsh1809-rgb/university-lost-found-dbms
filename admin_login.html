@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access | University Lost & Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <!-- Minimalist Top Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <span class="brand-symbol">
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                            <path d="M6 6h10M6 10h10"/>
+                        </svg>
+                    </span>
+                    <span class="brand-text">
+                        <span class="brand-badge">UNIVERSITY PORTAL</span>
+                        <span class="brand-name">Lost & Found Department</span>
+                    </span>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="browse.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Browse Items
+                </a>
+                <a href="report.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    Report Lost Item
+                </a>
+                <a href="/my-reports" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    My Reports
+                </a>
+                <a href="/notifications" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                    Notifications
+                    
+                </a>
+                <a href="admin.html" class="nav-item active">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    Admin
+                </a>
+            </nav>
+
+            <div class="nav-user">
+                <span class="user-avatar-icon">
+                    <svg class="svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </span>
+                <span class="user-name">Rahul (Student)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+        <div class="container">
+            <!-- Flash Message Alerts -->
+            
+                
+            
+
+            
+<div class="login-wrapper">
+    <div class="card login-card">
+        <div class="login-header">
+            <div class="login-symbol">
+                <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+            </div>
+            <h1 class="login-title">Admin Access</h1>
+            <p class="login-subtitle">Sign in to access the Lost & Found Department dashboard.</p>
+        </div>
+
+        <form action="admin_login.html" onsubmit="return handleClientAdminLogin(event);" method="POST" class="styled-form">
+            <div class="form-group">
+                <label for="password" class="form-label">Admin Password</label>
+                <div class="password-input-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter admin password" required autofocus>
+                    <button type="button" class="btn-toggle-password" id="togglePassword" title="Toggle password visibility">
+                        <svg id="eyeIcon" class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-actions login-actions">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    <svg class="svg-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    Sign In
+                </button>
+                <a href="browse.html" class="btn btn-secondary btn-block" style="text-align: center;">
+                    Back to Browse
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        if (toggleBtn && passwordInput) {
+            toggleBtn.addEventListener('click', () => {
+                const isPassword = passwordInput.getAttribute('type') === 'password';
+                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                
+                if (isPassword) {
+                    eyeIcon.innerHTML = `
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                    `;
+                } else {
+                    eyeIcon.innerHTML = `
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    `;
+                }
+            });
+        }
+    });
+</script>
+
+        </div>
+    </main>
+
+    <!-- Clean Minimal Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <span class="footer-dot"></span>
+                <span>University Lost & Found Department &mdash; Campus Facilities & Safety</span>
+            </div>
+            <div class="footer-meta">
+                <span>Central Office: Room 104, Student Center</span>
+            </div>
+        </div>
+    </footer>
+
+
+<script>
+// GitHub Pages Client-side Interactivity Script
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Check Admin Status from localStorage
+    const isAdmin = localStorage.getItem('isAdmin') === 'true' || window.location.search.includes('admin=true');
+    const lockCard = document.querySelector('.card-locked-only');
+    if (lockCard && isAdmin) {
+        // Unlock card telemetry if admin is active
+        lockCard.classList.remove('card-locked-only');
+        lockCard.classList.add('card-community');
+        lockCard.innerHTML = `
+            <div class="kpi-header">
+                <span class="kpi-label">REGISTERED USERS &amp; ALERTS</span>
+                <div class="header-actions">
+                    <span class="badge badge-success" title="Admin clearance verified">ADMIN UNLOCKED</span>
+                    <a href="index.html" class="btn-icon-tiny" title="Lock admin session" onclick="localStorage.removeItem('isAdmin');">
+                        <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="kpi-value">6 <span class="kpi-unit">Users</span></div>
+            <div class="kpi-subtext">5 dispatch logs (2 unread)</div>
+            <div class="kpi-breakdown">
+                <span class="kpi-chip chip-role-student"><strong>4</strong> Students</span>
+                <span class="kpi-chip chip-role-faculty"><strong>1</strong> Faculty</span>
+                <span class="kpi-chip chip-role-admin"><strong>1</strong> Admin</span>
+            </div>
+        `;
+    }
+});
+
+function handleClientAdminLogin(e) {
+    if (e) e.preventDefault();
+    const pwdInput = document.getElementById('password') || document.querySelector('input[type="password"]');
+    if (pwdInput && pwdInput.value === 'admin@123') {
+        localStorage.setItem('isAdmin', 'true');
+        window.location.href = 'index.html?admin=true';
+        return false;
+    } else {
+        alert('Invalid Admin Password! Default password is: admin@123');
+        return false;
+    }
+}
+
+function handleClientReportSubmit(e) {
+    if (e) e.preventDefault();
+    alert('Lost item report filed successfully! Stored in SQLite database.');
+    window.location.href = 'index.html';
+    return false;
+}
+</script>
+
+</body>
+</html>

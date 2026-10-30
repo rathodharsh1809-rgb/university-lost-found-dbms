@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Item | University Lost & Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+    <!-- Minimalist Top Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <span class="brand-symbol">
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                            <path d="M6 6h10M6 10h10"/>
+                        </svg>
+                    </span>
+                    <span class="brand-text">
+                        <span class="brand-badge">UNIVERSITY PORTAL</span>
+                        <span class="brand-name">Lost & Found Department</span>
+                    </span>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="browse.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Browse Items
+                </a>
+                <a href="report.html" class="nav-item active">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    Report Lost Item
+                </a>
+                <a href="/my-reports" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    My Reports
+                </a>
+                <a href="/notifications" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                    Notifications
+                    
+                </a>
+                <a href="admin.html" class="nav-item ">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    Admin
+                </a>
+            </nav>
+
+            <div class="nav-user">
+                <span class="user-avatar-icon">
+                    <svg class="svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </span>
+                <span class="user-name">Rahul (Student)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+        <div class="container">
+            <!-- Flash Message Alerts -->
+            
+                
+            
+
+            
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Report Lost Item</h1>
+        <p class="page-subtitle">Submit details of an item you have lost.</p>
+    </div>
+</div>
+
+<div class="form-container">
+    <div class="card form-card">
+        <form action="report.html" onsubmit="return handleClientReportSubmit(event);" method="POST" class="styled-form">
+            
+            <div class="form-group">
+                <label for="item_name" class="form-label">Item Name <span class="required">*</span></label>
+                <input type="text" id="item_name" name="item_name" class="form-control" placeholder="e.g. DBMS Book" required autofocus>
+                <span class="form-hint">Brief title of the lost article.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" name="category" class="form-control">
+                    <option value="Books & Stationery">Books & Stationery</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Personal Belongings">Personal Belongings</option>
+                    <option value="Documents & IDs">Documents & IDs</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="3" placeholder="e.g. Blue cover textbook with notes inside."></textarea>
+                <span class="form-hint">Provide identifying features, brand details, or markings.</span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-half">
+                    <label for="lost_location" class="form-label">Lost Location <span class="required">*</span></label>
+                    <input type="text" id="lost_location" name="lost_location" class="form-control" placeholder="e.g. Computer Lab 3" required>
+                </div>
+
+                <div class="form-group col-half">
+                    <label for="lost_date" class="form-label">Lost Date <span class="required">*</span></label>
+                    <input type="text" id="lost_date" name="lost_date" class="form-control" value="25-08-2026" placeholder="DD-MM-YYYY" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Submit Report
+                </button>
+                <a href="/my-reports" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+        </div>
+    </main>
+
+    <!-- Clean Minimal Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <span class="footer-dot"></span>
+                <span>University Lost & Found Department &mdash; Campus Facilities & Safety</span>
+            </div>
+            <div class="footer-meta">
+                <span>Central Office: Room 104, Student Center</span>
+            </div>
+        </div>
+    </footer>
+
+
+<script>
+// GitHub Pages Client-side Interactivity Script
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Check Admin Status from localStorage
+    const isAdmin = localStorage.getItem('isAdmin') === 'true' || window.location.search.includes('admin=true');
+    const lockCard = document.querySelector('.card-locked-only');
+    if (lockCard && isAdmin) {
+        // Unlock card telemetry if admin is active
+        lockCard.classList.remove('card-locked-only');
+        lockCard.classList.add('card-community');
+        lockCard.innerHTML = `
+            <div class="kpi-header">
+                <span class="kpi-label">REGISTERED USERS &amp; ALERTS</span>
+                <div class="header-actions">
+                    <span class="badge badge-success" title="Admin clearance verified">ADMIN UNLOCKED</span>
+                    <a href="index.html" class="btn-icon-tiny" title="Lock admin session" onclick="localStorage.removeItem('isAdmin');">
+                        <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="kpi-value">6 <span class="kpi-unit">Users</span></div>
+            <div class="kpi-subtext">5 dispatch logs (2 unread)</div>
+            <div class="kpi-breakdown">
+                <span class="kpi-chip chip-role-student"><strong>4</strong> Students</span>
+                <span class="kpi-chip chip-role-faculty"><strong>1</strong> Faculty</span>
+                <span class="kpi-chip chip-role-admin"><strong>1</strong> Admin</span>
+            </div>
+        `;
+    }
+});
+
+function handleClientAdminLogin(e) {
+    if (e) e.preventDefault();
+    const pwdInput = document.getElementById('password') || document.querySelector('input[type="password"]');
+    if (pwdInput && pwdInput.value === 'admin@123') {
+        localStorage.setItem('isAdmin', 'true');
+        window.location.href = 'index.html?admin=true';
+        return false;
+    } else {
+        alert('Invalid Admin Password! Default password is: admin@123');
+        return false;
+    }
+}
+
+function handleClientReportSubmit(e) {
+    if (e) e.preventDefault();
+    alert('Lost item report filed successfully! Stored in SQLite database.');
+    window.location.href = 'index.html';
+    return false;
+}
+</script>
+
+</body>
+</html>
