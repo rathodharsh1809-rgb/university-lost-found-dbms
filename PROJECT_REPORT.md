@@ -280,10 +280,13 @@ erDiagram
 5. **Collection & Verification:** The student retrieves their belongings; the item status is finalized to `COLLECTED`.
 
 ### 6.3 Application Links & Repository Access
-- **Local Application URL:** [http://127.0.0.1:5000/dashboard](http://127.0.0.1:5000/dashboard)
-- **Direct Catalog URL:** [http://127.0.0.1:5000/browse](http://127.0.0.1:5000/browse)
-- **Admin Access Portal:** [http://127.0.0.1:5000/admin/login](http://127.0.0.1:5000/admin/login)
-- **GitHub Repository:** [https://github.com/dkr4102/university-lost-found-dbms](https://github.com/dkr4102/university-lost-found-dbms)
+- **Official GitHub Repository:** [https://github.com/rathodharsh1809-rgb/university-lost-found-dbms](https://github.com/rathodharsh1809-rgb/university-lost-found-dbms)
+- **Application Route Architecture:**
+  - **Master Analytics Dashboard:** `/dashboard` (Telemetry, interactive charts, and SQLite specs)
+  - **Public Inventory Catalog:** `/browse` (Search catalog & inventory actions)
+  - **Lost Item Intake Portal:** `/report` (Student reporting form)
+  - **Protected Admin Console:** `/admin/login` (Department administrative console)
+- **Deployment & Local Execution:** Production deployment configured via `Procfile` (Gunicorn) and `render.yaml`; local execution via `python main.py`.
 
 ---
 
