@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Report - AI-Assisted Web Application | Marwadi University</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --primary: #1b4d3e;
+            --primary-dark: #12352b;
+            --accent: #2563eb;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --bg-light: #f8fafc;
+            --border: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-dark);
+            background-color: #e2e8f0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Printable A4 Container */
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20mm auto;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            padding: 22mm 22mm 22mm 22mm;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        @media screen {
+            .page-container {
+                border-radius: 4px;
+            }
+        }
+
+        /* University Header Layout */
+        .univ-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #0f172a;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .univ-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .univ-logo-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0284c7;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            letter-spacing: -1px;
+        }
+
+        .univ-names {
+            line-height: 1.2;
+        }
+
+        .univ-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #0f172a;
+        }
+
+        .univ-sub {
+            font-size: 10px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .naac-badge {
+            background: #b91c1c;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 2px solid #fee2e2;
+        }
+
+        .dept-title {
+            text-align: right;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.35;
+        }
+
+        .dept-sub {
+            font-size: 11px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        /* Cover Page Styling */
+        .cover-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .report-main-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #0f172a;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .report-subtitle {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .semester-badge {
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 45px;
+        }
+
+        .project-tag {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .project-title-box {
+            background: #f1f5f9;
+            border-left: 5px solid var(--primary);
+            padding: 20px 24px;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+
+        .project-title-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.35;
+        }
+
+        .submission-box {
+            width: 100%;
+            max-width: 540px;
+            text-align: left;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+
+        .submitted-heading {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 14px;
+            font-size: 13.5px;
+        }
+
+        .field-label {
+            font-weight: 700;
+            color: #334155;
+            width: 130px;
+            flex-shrink: 0;
+        }
+
+        .field-line {
+            flex: 1;
+            border-bottom: 1px dashed #64748b;
+            font-weight: 600;
+            color: #0f172a;
+            padding-left: 6px;
+        }
+
+        /* Inner Page Formatting */
+        h2.section-heading {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        h3.subsection-heading {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 14px 0 6px 0;
+        }
+
+        p, li {
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        /* TOC Styling */
+        .toc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .toc-table tr {
+            border-bottom: 1px dotted #cbd5e1;
+        }
+
+        .toc-table td {
+            padding: 10px 4px;
+            font-size: 14px;
+        }
+
+        .toc-num {
+            font-weight: 700;
+            width: 30px;
+            color: var(--primary);
+        }
+
+        .toc-title {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .toc-page {
+            text-align: right;
+            font-weight: 700;
+            color: #475569;
+            width: 50px;
+        }
+
+        /* Tables & Callouts */
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 12.5px;
+        }
+
+        .report-table th, .report-table td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        .report-table th {
+            background-color: #f1f5f9;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .report-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .code-box {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            line-height: 1.45;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .prompt-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 3px solid #2563eb;
+            border-radius: 5px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+        }
+
+        .prompt-purpose {
+            font-weight: 700;
+            font-size: 12px;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .prompt-quote {
+            font-style: italic;
+            font-size: 12px;
+            color: #334155;
+            background: #ffffff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 4px;
+        }
+
+        .prompt-outcome {
+            font-size: 12px;
+            color: #059669;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-top: 14px;
+        }
+
+        /* Print Controls */
+        .no-print-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+        }
+
+        .print-btn {
+            background: #10b981;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .print-btn:hover {
+            background: #059669;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .no-print-bar {
+                display: none;
+            }
+            .page-container {
+                width: 100%;
+                min-height: 100vh;
+                margin: 0;
+                padding: 16mm 16mm 16mm 16mm;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Screen-only Print Bar -->
+    <div class="no-print-bar">
+        <div>
+            <strong>AI-Assisted Web Application Project Report</strong> &bull; Marwadi University Department of CSE
+        </div>
+        <button class="print-btn" onclick="window.print()">Print Report / Save as PDF</button>
+    </div>
+
+    <!-- ==========================================
+         PAGE 1: COVER PAGE
+         ========================================== -->
+    <div class="page-container" style="margin-top: 60px;">
+        <div class="univ-header">
+            <div class="univ-brand">
+                <div class="univ-logo-badge">MU</div>
+                <div class="univ-names">
+                    <div class="univ-title">Marwadi University</div>
+                    <div class="univ-sub">Marwadi Chandarana Group</div>
+                </div>
+                <span class="naac-badge">NAAC A+</span>
+            </div>
+            <div class="dept-title">
+                Faculty of Engineering and Technology<br>
+                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+            </div>
+        </div>
+
+        <div class="cover-content">
+            <h1 class="report-main-title">PROJECT REPORT</h1>
+            <h2 class="report-subtitle">AI-Assisted Web Application Project</h2>
+            <div class="semester-badge">Semester 3 – CSE (AI/ML)</div>
+
+            <div class="project-tag">Project Title</div>
+            <div class="project-title-box">
+                <div class="project-title-text">
+                    University Lost &amp; Found Management System<br>
+                    <span style="font-size: 15px; font-weight: 600; color: #475569;">(DBMS &amp; AI-Assisted Telemetry Analytics Portal)</span>
+                </div>
+            </div>
+
+            <div class="submission-box">
+                <div class="submitted-heading">Submitted by</div>
+                <div class="field-row">
+                    <span class="field-label">Student Name:</span>
+                    <span class="field-line">Harsh</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">Enrollment No.:</span>
+                    <span class="field-line">__________________________________________</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">Division:</span>
+                    <span class="field-line">__________________________________________</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
+            <span>Cover Page</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PAGE 2: TABLE OF CONTENTS
+         ========================================== -->
+    <div class="page-container">
+        <div class="univ-header">
+            <div class="univ-brand">
+                <div class="univ-logo-badge">MU</div>
+                <div class="univ-names">
+                    <div class="univ-title">Marwadi University</div>
+                    <div class="univ-sub">Marwadi Chandarana Group</div>
+                </div>
+                <span class="naac-badge">NAAC A+</span>
+            </div>
+            <div class="dept-title">
+                Faculty of Engineering and Technology<br>
+                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+            </div>
+        </div>
+
+        <div style="flex: 1;">
+            <h2 class="section-heading" style="margin-top: 10px;">Contents</h2>
+            <table class="toc-table">
+                <tbody>
+                    <tr>
+                        <td class="toc-num">1.</td>
+                        <td class="toc-title">Introduction</td>
+                        <td class="toc-page">3</td>
+                    </tr>
+                    <tr>
+                        <td class="toc-num">2.</td>
+                        <td class="toc-title">Target User</td>
+                        <td class="toc-page">3</td>
+                    </tr>
+                    <tr>
+                        <td class="toc-num">3.</td>
+                        <td class="toc-title">Tools Used</td>
+                        <td class="toc-page">3</td>
+                    </tr>
+                    <tr>
+                        <td class="toc-num">4.</td>
+                        <td class="toc-title">Prompt Engineering Process</td>
+                        <td class="toc-page">4</td>
+                    </tr>
+                    <tr>
+                        <td class="toc-num">5.</td>
+                        <td class="toc-title">Application Design and Development</td>
+                        <td class="toc-page">5</td>
+                    </tr>
+                    <tr>
+                        <td class="toc-num">6.</td>
+                        <td class="toc-title">Final Application</td>
+                        <td class="toc-page">6</td>
+                    </tr>
+                    <tr>
+                        <td class="toc-num">7.</td>
+                        <td class="toc-title">Conclusion</td>
+                        <td class="toc-page">7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-footer">
+            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
+            <span>Page 2</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PAGE 3: SECTIONS 1, 2, 3
+         ========================================== -->
+    <div class="page-container">
+        <div class="univ-header">
+            <div class="univ-brand">
+                <div class="univ-logo-badge">MU</div>
+                <div class="univ-names">
+                    <div class="univ-title">Marwadi University</div>
+                    <div class="univ-sub">Marwadi Chandarana Group</div>
+                </div>
+                <span class="naac-badge">NAAC A+</span>
+            </div>
+            <div class="dept-title">
+                Faculty of Engineering and Technology<br>
+                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+            </div>
+        </div>
+
+        <div style="flex: 1;">
+            <h2 class="section-heading">1. Introduction</h2>
+            <p>
+                In a modern university ecosystem with thousands of active students, faculty members, and campus visitors, personal belongings such as student identification cards, laptops, headphones, lab manuals, and keys are routinely misplaced. Traditional lost and found methods rely on physical lost notice boards, chaotic social messaging threads, or paper logbooks. These manual processes result in low recovery rates, prolonged delays in returning items to owners, and heavy administrative overhead for campus security checkpoints.
+            </p>
+            <p>
+                To resolve this problem, the <strong>University Lost &amp; Found Management System</strong> was built as an enterprise-grade, database-driven web platform. It delivers self-service lost reporting, real-time catalog browsing, automated claim matching, and an executive telemetry dashboard providing visual analytics on campus recovery performance. Prompt engineering and advanced AI coding agents were harnessed across all project milestones—including Three-Level Architectural separation, schema aggregation query formulation, Chart.js multi-view data visualization, and automated integration test authoring.
+            </p>
+
+            <h2 class="section-heading">2. Target User</h2>
+            <p>The application is engineered for four primary stakeholder profiles within the university:</p>
+            <ul>
+                <li><strong>Students:</strong> Need a clean, friction-free interface to file lost item reports with specific location and time markers, browse found inventories, and track the status of their belongings.</li>
+                <li><strong>Faculty &amp; Campus Staff:</strong> Frequently locate items left behind in lecture halls, laboratories, or seminar rooms and turn them over to security desks.</li>
+                <li><strong>Lost &amp; Found Department Officers:</strong> Manage physical catalog shelves, update item availability (Available, Claimed, Disposed), review verification claims, and manage database records.</li>
+                <li><strong>Campus Administration &amp; IT Ops:</strong> Monitor institution-wide recovery rates, identify high-loss campus zones (hotspots), track notification dispatch queues, and audit physical SQLite database telemetry.</li>
+            </ul>
+
+            <h2 class="section-heading">3. Tools Used</h2>
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Layer / Domain</th>
+                        <th>Technologies &amp; Libraries</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Backend &amp; DB</strong></td>
+                        <td>Python 3.12, Flask 3.0, SQLite 3 (WAL journal mode &amp; foreign keys enabled).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frontend Architecture</strong></td>
+                        <td>HTML5, Vanilla CSS3 (Custom design system, HSL variables, fluid glassmorphism), Vanilla JS (ES6+).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Visual Analytics</strong></td>
+                        <td>Chart.js 4.4.x (Interactive animated Doughnut, Polar Area, and Horizontal Bar charts).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Templating Engine</strong></td>
+                        <td>Jinja2 (base layout inheritance, safe W3C application/json data encapsulation).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Tools &amp; Role</strong></td>
+                        <td>Antigravity AI (Gemini Agentic Coding Assistant) used for requirements analysis, full-stack Three-Layer code generation, Chart.js implementation, and debugging 39 AST syntax problems.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-footer">
+            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
+            <span>Page 3</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PAGE 4: SECTION 4 (PROMPT ENGINEERING PROCESS)
+         ========================================== -->
+    <div class="page-container">
+        <div class="univ-header">
+            <div class="univ-brand">
+                <div class="univ-logo-badge">MU</div>
+                <div class="univ-names">
+                    <div class="univ-title">Marwadi University</div>
+                    <div class="univ-sub">Marwadi Chandarana Group</div>
+                </div>
+                <span class="naac-badge">NAAC A+</span>
+            </div>
+            <div class="dept-title">
+                Faculty of Engineering and Technology<br>
+                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+            </div>
+        </div>
+
+        <div style="flex: 1;">
+            <h2 class="section-heading">4. Prompt Engineering Process</h2>
+            <p>Systematic prompt engineering was applied sequentially across all six engineering stages:</p>
+
+            <div class="prompt-card">
+                <div class="prompt-purpose">1. Idea &amp; Problem Analysis</div>
+                <div class="prompt-quote">"Analyze the university-lost-found-dbms repository. Clone the repo, review its current architecture, database schema, and operational workflow. Identify what is required to turn this into a modern, complete campus-wide management portal."</div>
+                <div class="prompt-outcome">&check; Outcome: Identified architectural gaps, missing telemetry, and formulated the Three-Layer software architecture.</div>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-purpose">2. Requirements &amp; DBMS Features</div>
+                <div class="prompt-quote">"In this create a dashboard and in that put all the details. Ensure zero SQL queries are written in frontend templates; maintain strict separation: routes call the service layer, and service calls the repository layer."</div>
+                <div class="prompt-outcome">&check; Outcome: Implemented <code>get_dashboard_data()</code> aggregating KPIs, incident hotspots, and SQLite metadata.</div>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-purpose">3. UI / Layout Design &amp; Aesthetics</div>
+                <div class="prompt-quote">"In dashboard update this and in this put animated graph chart. Use a modern color palette, smooth transitions, and multi-view toggles."</div>
+                <div class="prompt-outcome">&check; Outcome: Integrated Chart.js interactive switcher (Doughnut / Polar / Bar) and instant table live search filtering.</div>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-purpose">4. Security State &amp; Lock Screen</div>
+                <div class="prompt-quote">"Here put only lock animation don't put anything else before admin login. Show the user details only after unlocking the admin panel."</div>
+                <div class="prompt-outcome">&check; Outcome: Designed pure animated SVG padlock with breathing aura and floating hover physics on unauthenticated Card 4.</div>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-purpose">5. Testing &amp; Automated Verification</div>
+                <div class="prompt-quote">"Generate an end-to-end automated test script that tests browsing items, item deletion via SQL execution, admin authentication, automated notification dispatching, and dashboard rendering."</div>
+                <div class="prompt-outcome">&check; Outcome: Created <code>test_demo_flow.py</code> with 10 passing end-to-end integration test checkpoints.</div>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-purpose">6. Debugging &amp; Improvement (Fixing 39 Problems)</div>
+                <div class="prompt-quote">"Solve all 39 problems in dashboard.html."</div>
+                <div class="prompt-outcome">&check; Outcome: Resolved all 39 AST syntax parser errors by isolating Jinja into <code>&lt;script type="application/json"&gt;</code> DOM containers.</div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
+            <span>Page 4</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PAGE 5: SECTION 5 (APPLICATION DESIGN & DEVELOPMENT)
+         ========================================== -->
+    <div class="page-container">
+        <div class="univ-header">
+            <div class="univ-brand">
+                <div class="univ-logo-badge">MU</div>
+                <div class="univ-names">
+                    <div class="univ-title">Marwadi University</div>
+                    <div class="univ-sub">Marwadi Chandarana Group</div>
+                </div>
+                <span class="naac-badge">NAAC A+</span>
+            </div>
+            <div class="dept-title">
+                Faculty of Engineering and Technology<br>
+                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+            </div>
+        </div>
+
+        <div style="flex: 1;">
+            <h2 class="section-heading">5. Application Design and Development</h2>
+            <h3 class="subsection-heading">5.1 Three-Layer Architectural Flow</h3>
+            <p>
+                The system strictly avoids business logic or direct SQL queries in frontend presentation templates. Controllers in <code>lost_found_routes.py</code> handle HTTP requests and invoke domain functions in <code>lost_found_service.py</code>, which then executes optimized SQL queries via <code>lost_found_repo.py</code>.
+            </p>
+            <div class="code-box">
+[Browser Client] &lt;== HTTP GET/POST ==&gt; [Routes Layer (lost_found_routes.py)]
+                                                  ||
+                                         (Service Calls)
+                                                  v
+                                     [Service Layer (lost_found_service.py)]
+                                                  ||
+                                         (Data Queries)
+                                                  v
+                                     [Repository Layer (lost_found_repo.py)]
+                                                  ||
+                                         (PRAGMA WAL Queries)
+                                                  v
+                                     [SQLite Database (lost_and_found.db)]
+            </div>
+
+            <h3 class="subsection-heading">5.2 Relational Entity Schema</h3>
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Table</th>
+                        <th>Primary Key</th>
+                        <th>Foreign Keys &amp; Key Attributes</th>
+                        <th>Functional Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>USERS</code></td>
+                        <td><code>user_id</code></td>
+                        <td><code>email</code> (UNIQUE), <code>role</code> (STUDENT, FACULTY, ADMIN)</td>
+                        <td>Stores registered campus accounts and notification recipients.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LOST_ITEMS</code></td>
+                        <td><code>lost_item_id</code></td>
+                        <td><code>user_id</code> (FK), <code>status</code> (SEARCHING, FOUND, COLLECTED)</td>
+                        <td>Captures reports of missing belongings with date and location.</td>
+                    </tr>
+                    <tr>
+                        <td><code>FOUND_ITEMS</code></td>
+                        <td><code>found_item_id</code></td>
+                        <td><code>status</code> (AVAILABLE, CLAIMED, DISPOSED)</td>
+                        <td>Inventories items physically turned in to campus security.</td>
+                    </tr>
+                    <tr>
+                        <td><code>NOTIFICATIONS</code></td>
+                        <td><code>notification_id</code></td>
+                        <td><code>user_id</code> (FK), <code>is_read</code></td>
+                        <td>Automated inbox alerting students when their items are found.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-heading">5.3 Core UI Modules</h3>
+            <ul>
+                <li><strong>Executive KPI Grid:</strong> Summarizes total lost reports, active found inventory, institution recovery rate percentage, and locked/unlocked user counts.</li>
+                <li><strong>Animated Charts:</strong> Real-time Chart.js doughnut with inner aggregate total, switchable to polar area or bar chart views.</li>
+                <li><strong>Master Relational Tabs:</strong> Interactive table tabs with live instant searching across item descriptions, owners, and SQLite file storage metrics.</li>
+            </ul>
+        </div>
+
+        <div class="page-footer">
+            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
+            <span>Page 5</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PAGE 6: SECTION 6 & 7 (FINAL APPLICATION & CONCLUSION)
+         ========================================== -->
+    <div class="page-container">
+        <div class="univ-header">
+            <div class="univ-brand">
+                <div class="univ-logo-badge">MU</div>
+                <div class="univ-names">
+                    <div class="univ-title">Marwadi University</div>
+                    <div class="univ-sub">Marwadi Chandarana Group</div>
+                </div>
+                <span class="naac-badge">NAAC A+</span>
+            </div>
+            <div class="dept-title">
+                Faculty of Engineering and Technology<br>
+                <span class="dept-sub">Department of CSE – AI, ML and DS</span>
+            </div>
+        </div>
+
+        <div style="flex: 1;">
+            <h2 class="section-heading">6. Final Application</h2>
+            <p>
+                The finalized system provides an end-to-end operational loop for the university community. Students can effortlessly submit lost item reports, while the campus community can browse items currently available in the found inventory. Administrators possess authenticated tools to update item status, dispatch real-time alerts, and monitor campus-wide telemetry.
+            </p>
+            <h3 class="subsection-heading">6.1 Application Access &amp; Deployment Links</h3>
+            <ul>
+                <li><strong>Live Deployed Web Application:</strong> <a href="https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: underline;">https://rathodharsh1809-rgb.github.io/university-lost-found-dbms/</a></li>
+                <li><strong>Official GitHub Repository:</strong> <a href="https://github.com/rathodharsh1809-rgb/university-lost-found-dbms" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: underline;">https://github.com/rathodharsh1809-rgb/university-lost-found-dbms</a></li>
+                <li><strong>Application Modules &amp; Navigation:</strong>
+                    <ul style="margin: 6px 0; padding-left: 20px;">
+                        <li><strong>Master Telemetry &amp; DBMS Dashboard:</strong> <code>/dashboard</code> (Live KPI counters, Chart.js views, and DBMS specs)</li>
+                        <li><strong>Public Found Items Catalog:</strong> <code>/browse</code> (Catalog search, status filters, and inventory removal)</li>
+                        <li><strong>Lost Item Reporting Portal:</strong> <code>/report</code> (Frictionless student report intake form)</li>
+                        <li><strong>Protected Administrative Desk:</strong> <code>/admin/login</code> (Role-based clearance &amp; automated notification dispatch)</li>
+                    </ul>
+                </li>
+                <li><strong>Deployment &amp; Execution:</strong> Production deployment configured via GitHub Pages, <code>Procfile</code> (Gunicorn), and <code>render.yaml</code>; local execution via <code>python main.py</code>.</li>
+            </ul>
+
+            <h2 class="section-heading">7. Conclusion</h2>
+            <h3 class="subsection-heading">7.1 Project Summary</h3>
+            <p>
+                The University Lost &amp; Found Management System successfully replaces outdated manual methods with an automated, transparent, and aesthetically engaging web portal. Operating on a lightweight SQLite engine with Write-Ahead Logging and a structured Python Flask backend, it delivers reliable data consistency, real-time analytics, and automated student alerting.
+            </p>
+
+            <h3 class="subsection-heading">7.2 The Role of AI in Rapid Engineering</h3>
+            <p>
+                The integration of generative AI coding assistants and precise prompt engineering drastically accelerated development. Key achievements—including refactoring raw database queries into a production Three-Layer Architecture, creating animated multi-view Chart.js components, establishing automated integration test suites, and resolving 39 complex AST parser errors—were accomplished rapidly and reliably without introducing technical debt.
+            </p>
+
+            <h3 class="subsection-heading">7.3 Future Improvements</h3>
+            <ul>
+                <li><strong>AI Multimodal Image Matching:</strong> Integrate a computer vision model (e.g., CLIP / Gemini Vision) to automatically calculate visual similarity scores between lost and found item photos.</li>
+                <li><strong>Automated SMS &amp; Email Alerts:</strong> Connect Twilio / SMTP services to notify students the moment a matching item is logged by campus security.</li>
+                <li><strong>QR Code Tagging:</strong> Provide students with printable QR tags for high-value belongings (laptops, backpacks) allowing one-scan owner notifications.</li>
+            </ul>
+        </div>
+
+        <div class="page-footer">
+            <span>Marwadi University &bull; Dept. of CSE (AI, ML and DS)</span>
+            <span>Page 6</span>
+        </div>
+    </div>
+
+</body>
+</html>
