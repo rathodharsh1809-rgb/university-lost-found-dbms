@@ -189,3 +189,130 @@ class LostFoundRepository:
                 SET is_read = 1
                 WHERE user_id = ?;
             """, (user_id,))
+
+    # -------------------------------------------------------------------------
+    # Comprehensive Dashboard Auditing Queries
+    # -------------------------------------------------------------------------
+    @staticmethod
+    def get_all_found_items() -> List[Dict[str, Any]]:
+        """SELECT: Returns all found items (all statuses) for dashboard auditing."""
+        with get_db_connection() as conn:
+            rows = conn.execute("""
+                SELECT found_item_id, item_name, description, found_location, found_date, status, created_at
+                FROM found_items
+                ORDER BY found_item_id DESC;
+            """).fetchall()
+            return [dict(row) for row in rows]
+
+    @staticmethod
+    def get_all_users_with_stats() -> List[Dict[str, Any]]:
+        """SELECT: Returns all registered users with count of their lost reports."""
+        with get_db_connection() as conn:
+            rows = conn.execute("""
+                SELECT 
+                    u.user_id,
+                    u.name,
+                    u.email,
+                    u.role,
+                    COUNT(l.lost_item_id) AS total_reports
+                FROM users u
+                LEFT JOIN lost_items l ON u.user_id = l.user_id
+                GROUP BY u.user_id, u.name, u.email, u.role
+                ORDER BY u.user_id ASC;
+            """).fetchall()
+            return [dict(row) for row in rows]
+
+    @staticmethod
+    def get_all_notifications_with_users() -> List[Dict[str, Any]]:
+        """SELECT: Returns all notifications across system joined with recipient details."""
+        with get_db_connection() as conn:
+            rows = conn.execute("""
+                SELECT 
+                    n.notification_id,
+                    n.user_id,
+                    u.name AS user_name,
+                    u.email AS user_email,
+                    n.message,
+                    n.is_read,
+                    n.created_at
+                FROM notifications n
+                JOIN users u ON n.user_id = u.user_id
+                ORDER BY n.notification_id DESC;
+            """).fetchall()
+            return [dict(row) for row in rows]
+
+    @staticmethod
+    def get_dashboard_aggregates() -> Dict[str, Any]:
+        """SELECT Aggregates: Calculates all KPI metrics, status distributions, and category breakdowns."""
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            
+            # Lost items stats
+            total_lost = cursor.execute("SELECT COUNT(*) FROM lost_items;").fetchone()[0]
+            lost_searching = cursor.execute("SELECT COUNT(*) FROM lost_items WHERE status = 'SEARCHING';").fetchone()[0]
+            lost_found = cursor.execute("SELECT COUNT(*) FROM lost_items WHERE status = 'FOUND';").fetchone()[0]
+            lost_collected = cursor.execute("SELECT COUNT(*) FROM lost_items WHERE status = 'COLLECTED';").fetchone()[0]
+            
+            # Found items stats
+            total_found = cursor.execute("SELECT COUNT(*) FROM found_items;").fetchone()[0]
+            found_available = cursor.execute("SELECT COUNT(*) FROM found_items WHERE status = 'AVAILABLE';").fetchone()[0]
+            found_claimed = cursor.execute("SELECT COUNT(*) FROM found_items WHERE status = 'CLAIMED';").fetchone()[0]
+            found_disposed = cursor.execute("SELECT COUNT(*) FROM found_items WHERE status = 'DISPOSED';").fetchone()[0]
+            
+            # Users stats
+            total_users = cursor.execute("SELECT COUNT(*) FROM users;").fetchone()[0]
+            student_count = cursor.execute("SELECT COUNT(*) FROM users WHERE role = 'student';").fetchone()[0]
+            faculty_count = cursor.execute("SELECT COUNT(*) FROM users WHERE role = 'faculty';").fetchone()[0]
+            admin_count = cursor.execute("SELECT COUNT(*) FROM users WHERE role = 'admin';").fetchone()[0]
+            
+            # Notifications stats
+            total_notifications = cursor.execute("SELECT COUNT(*) FROM notifications;").fetchone()[0]
+            unread_notifications = cursor.execute("SELECT COUNT(*) FROM notifications WHERE is_read = 0;").fetchone()[0]
+            
+            # Category distribution
+            cat_rows = cursor.execute("""
+                SELECT category, COUNT(*) as count 
+                FROM lost_items 
+                GROUP BY category 
+                ORDER BY count DESC;
+            """).fetchall()
+            category_distribution = [{"category": r["category"] or "General", "count": r["count"]} for r in cat_rows]
+            
+            # Location hotspots (combining lost and found locations)
+            loc_rows = cursor.execute("""
+                SELECT location, COUNT(*) as count FROM (
+                    SELECT lost_location AS location FROM lost_items WHERE lost_location IS NOT NULL AND lost_location != ''
+                    UNION ALL
+                    SELECT found_location AS location FROM found_items WHERE found_location IS NOT NULL AND found_location != ''
+                )
+                GROUP BY location
+                ORDER BY count DESC
+                LIMIT 6;
+            """).fetchall()
+            location_hotspots = [{"location": r["location"], "count": r["count"]} for r in loc_rows]
+            
+            # Recovery rate
+            resolved_lost = lost_found + lost_collected
+            recovery_rate = round((resolved_lost / total_lost * 100), 1) if total_lost > 0 else 0.0
+
+            return {
+                "total_lost": total_lost,
+                "lost_searching": lost_searching,
+                "lost_found": lost_found,
+                "lost_collected": lost_collected,
+                "total_found": total_found,
+                "found_available": found_available,
+                "found_claimed": found_claimed,
+                "found_disposed": found_disposed,
+                "total_users": total_users,
+                "student_count": student_count,
+                "faculty_count": faculty_count,
+                "admin_count": admin_count,
+                "total_notifications": total_notifications,
+                "unread_notifications": unread_notifications,
+                "resolved_lost": resolved_lost,
+                "recovery_rate": recovery_rate,
+                "category_distribution": category_distribution,
+                "location_hotspots": location_hotspots
+            }
+

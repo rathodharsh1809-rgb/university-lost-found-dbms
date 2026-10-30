@@ -124,13 +124,24 @@ def run_tests():
     print('[PASS] 8. Admin Logout cleared session and redirected to Browse page')
 
     # -------------------------------------------------------------------------
-    # 10. Clean up test record
+    # 10. Test Master Dashboard Endpoint & Telemetry
+    # -------------------------------------------------------------------------
+    res_dash = client.get('/dashboard')
+    assert res_dash.status_code == 200
+    assert b'Master Dashboard' in res_dash.data
+    assert b'TOTAL LOST REPORTS' in res_dash.data
+    assert b'FOUND INVENTORY' in res_dash.data
+    assert b'Physical DBMS Architecture' in res_dash.data
+    print('[PASS] 9. Master Executive Dashboard verified with all telemetry and DBMS specs')
+
+    # -------------------------------------------------------------------------
+    # 11. Clean up test record
     # -------------------------------------------------------------------------
     with get_db_connection() as conn:
         conn.execute(f'DELETE FROM lost_items WHERE lost_item_id = {lost_id}')
         conn.execute('DELETE FROM notifications WHERE message LIKE "%Demo Security Book%"')
         conn.commit()
-    print('[PASS] 9. Test data cleaned up')
+    print('[PASS] 10. Test data cleaned up')
 
     print('\n=================================================================')
     print(' ALL LIVE DEMO FLOWS VERIFIED SUCCESSFULLY!')
@@ -139,3 +150,4 @@ def run_tests():
 
 if __name__ == '__main__':
     run_tests()
+

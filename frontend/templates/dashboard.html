@@ -1,0 +1,815 @@
+{% extends "base.html" %}
+
+{% block title %}Operations & DBMS Analytics Dashboard | University Lost & Found{% endblock %}
+
+{% block content %}
+<!-- Executive Dashboard Header -->
+<div class="page-header dashboard-header">
+    <div>
+        <div class="header-pretitle">
+            <span class="live-dot"></span>
+            <span>LIVE SYSTEM TELEMETRY &bull; SQLite WAL MODE</span>
+        </div>
+        <h1 class="page-title">University Lost &amp; Found Master Dashboard</h1>
+        <p class="page-subtitle">Comprehensive operational metrics, cross-entity relational registries, and internal database performance metrics.</p>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('routes.report') }}" class="btn btn-primary btn-sm">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="16"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            Report Lost Item
+        </a>
+        <a href="{{ url_for('routes.browse') }}" class="btn btn-secondary btn-sm">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            Browse Catalog
+        </a>
+        <a href="{{ url_for('routes.admin') }}" class="btn btn-secondary btn-sm">
+            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Admin Console
+        </a>
+    </div>
+</div>
+
+<!-- 4 Key Performance Indicator (KPI) Cards -->
+<div class="kpi-grid">
+    <!-- Card 1: Lost Items -->
+    <div class="kpi-card card-lost">
+        <div class="kpi-header">
+            <span class="kpi-label">TOTAL LOST REPORTS</span>
+            <span class="kpi-icon-wrap icon-amber">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </span>
+        </div>
+        <div class="kpi-value">{{ aggregates.total_lost }}</div>
+        <div class="kpi-subtext">Cumulative reports submitted by campus students &amp; staff</div>
+        <div class="kpi-breakdown">
+            <span class="kpi-chip chip-searching" title="Currently Searching">
+                <strong>{{ aggregates.lost_searching }}</strong> Searching
+            </span>
+            <span class="kpi-chip chip-found" title="Located by department">
+                <strong>{{ aggregates.lost_found }}</strong> Found
+            </span>
+            <span class="kpi-chip chip-collected" title="Collected by owner">
+                <strong>{{ aggregates.lost_collected }}</strong> Collected
+            </span>
+        </div>
+    </div>
+
+    <!-- Card 2: Found Items -->
+    <div class="kpi-card card-found">
+        <div class="kpi-header">
+            <span class="kpi-label">FOUND INVENTORY</span>
+            <span class="kpi-icon-wrap icon-blue">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                    <path d="m3.3 7 8.7 5 8.7-5"/>
+                    <path d="M12 22V12"/>
+                </svg>
+            </span>
+        </div>
+        <div class="kpi-value">{{ aggregates.total_found }}</div>
+        <div class="kpi-subtext">Items turned in to the Lost &amp; Found department</div>
+        <div class="kpi-breakdown">
+            <span class="kpi-chip chip-available" title="Ready to claim in department">
+                <strong>{{ aggregates.found_available }}</strong> Available
+            </span>
+            <span class="kpi-chip chip-claimed" title="Claimed by rightful owner">
+                <strong>{{ aggregates.found_claimed }}</strong> Claimed
+            </span>
+            <span class="kpi-chip chip-disposed" title="Disposed or recycled">
+                <strong>{{ aggregates.found_disposed }}</strong> Disposed
+            </span>
+        </div>
+    </div>
+
+    <!-- Card 3: Recovery Rate -->
+    <div class="kpi-card card-recovery">
+        <div class="kpi-header">
+            <span class="kpi-label">RECOVERY / RESOLUTION RATE</span>
+            <span class="kpi-icon-wrap icon-green">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </span>
+        </div>
+        <div class="kpi-value">{{ aggregates.recovery_rate }}%</div>
+        <div class="kpi-subtext">{{ aggregates.resolved_lost }} of {{ aggregates.total_lost }} lost reports resolved or matched</div>
+        <div class="recovery-meter">
+            <div class="recovery-fill" style="width: {{ aggregates.recovery_rate }}%;"></div>
+        </div>
+    </div>
+
+    <!-- Card 4: Community & Registered Users (Shows details only after admin unlock; only lock animation before) -->
+    {% if is_admin %}
+    <div class="kpi-card card-community">
+        <div class="kpi-header">
+            <span class="kpi-label">REGISTERED USERS &amp; ALERTS</span>
+            <div class="header-actions">
+                <span class="badge badge-success" title="Admin clearance verified">ADMIN UNLOCKED</span>
+                <a href="{{ url_for('routes.admin_logout') }}" class="btn-icon-tiny" title="Lock admin session">
+                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="kpi-value">{{ aggregates.total_users }} <span class="kpi-unit">Users</span></div>
+        <div class="kpi-subtext">{{ aggregates.total_notifications }} dispatch logs ({{ aggregates.unread_notifications }} unread)</div>
+        <div class="kpi-breakdown">
+            <span class="kpi-chip chip-role-student"><strong>{{ aggregates.student_count }}</strong> Students</span>
+            <span class="kpi-chip chip-role-faculty"><strong>{{ aggregates.faculty_count }}</strong> Faculty</span>
+            <span class="kpi-chip chip-role-admin"><strong>{{ aggregates.admin_count }}</strong> Admin</span>
+        </div>
+    </div>
+    {% else %}
+    <div class="kpi-card card-locked-only">
+        <div class="kpi-header">
+            <span class="kpi-label">REGISTERED USERS &amp; ALERTS</span>
+        </div>
+        <a href="{{ url_for('routes.admin_login') }}" class="lock-solo-wrapper" title="Admin access required - Click to login">
+            <div class="lock-solo-aura"></div>
+            <div class="lock-animated-svg-box">
+                <svg class="svg-padlock" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="padlock-shackle" d="M16 22V15C16 10.58 19.58 7 24 7C28.42 7 32 10.58 32 15V22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                    <rect class="padlock-body" x="11" y="22" width="26" height="19" rx="4" fill="currentColor"/>
+                    <circle cx="24" cy="29.5" r="2.2" fill="#ffffff"/>
+                    <path d="M22.8 31L22 35.5H26L25.2 31H22.8Z" fill="#ffffff"/>
+                </svg>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+
+<!-- Visual Analytics & Animated Graph Charts Section -->
+<div class="dashboard-analytics-row">
+    <!-- Category Distribution with Animated Interactive Graph Chart -->
+    <div class="card analytics-card">
+        <div class="card-header">
+            <div class="header-with-icon">
+                <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+                <h2 class="card-title">Lost Items by Category</h2>
+            </div>
+            <div class="header-actions">
+                <div class="chart-toggle-group">
+                    <button type="button" class="chart-type-btn active" id="btnChartDoughnut" onclick="changeCategoryChartType('doughnut')" title="Doughnut Chart View">Doughnut</button>
+                    <button type="button" class="chart-type-btn" id="btnChartPolarArea" onclick="changeCategoryChartType('polarArea')" title="Polar Area View">Polar</button>
+                    <button type="button" class="chart-type-btn" id="btnChartBar" onclick="changeCategoryChartType('bar')" title="Bar Chart View">Bar</button>
+                </div>
+                <span class="badge badge-neutral">{{ aggregates.category_distribution|length }} Categories</span>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if aggregates.category_distribution %}
+                <div class="category-chart-split">
+                    <!-- Left: Interactive Animated Canvas Chart -->
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="categoryChart" data-total-lost="{{ aggregates.total_lost }}"></canvas>
+                        <div id="chartCenterStats" class="chart-center-stats">
+                            <div class="center-num">{{ aggregates.total_lost }}</div>
+                            <div class="center-text">Total Lost</div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Detailed Category Breakdown with Color Indicators -->
+                    <div class="category-bars">
+                        {% set chart_colors = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6', '#6366f1'] %}
+                        {% for cat in aggregates.category_distribution %}
+                            {% set pct = (cat.count / aggregates.total_lost * 100)|round(1) if aggregates.total_lost > 0 else 0 %}
+                            {% set color = chart_colors[loop.index0 % chart_colors|length] %}
+                            <div class="category-bar-item cat-item-interactive">
+                                <div class="cat-info">
+                                    <span class="cat-name">
+                                        <span class="chart-legend-dot" style="background-color: {{ color }};"></span>
+                                        {{ cat.category }}
+                                    </span>
+                                    <span class="cat-count"><strong>{{ cat.count }}</strong> ({{ pct }}%)</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-bar-val" style="width: {{ pct }}%; background: {{ color }};"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-muted text-sm">No category distribution data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Campus Location Hotspots & Frequency Chart -->
+    <div class="card analytics-card">
+        <div class="card-header">
+            <div class="header-with-icon">
+                <svg class="svg-header" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <h2 class="card-title">Campus Activity Hotspots</h2>
+            </div>
+            <span class="badge badge-neutral">Incident Frequency</span>
+        </div>
+        <div class="card-body">
+            {% if aggregates.location_hotspots %}
+                <div class="chart-canvas-wrapper" style="height: 140px; margin-bottom: 14px;">
+                    <canvas id="hotspotsChart"></canvas>
+                </div>
+                <div class="hotspots-list">
+                    {% for loc in aggregates.location_hotspots %}
+                        <div class="hotspot-item">
+                            <div class="hotspot-rank">#{{ loop.index }}</div>
+                            <div class="hotspot-details">
+                                <div class="hotspot-name">{{ loc.location }}</div>
+                                <div class="hotspot-meta">Reported lost or turned-in found location</div>
+                            </div>
+                            <span class="badge badge-info">{{ loc.count }} records</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted text-sm">No location incidents recorded yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- All Details Master Tab Section -->
+<div class="card master-details-card">
+    <div class="master-tabs-header">
+        <div class="tabs-nav-bar">
+            <button class="tab-btn active" onclick="switchDashboardTab('lost-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                Lost Items Registry
+                <span class="tab-count-badge">{{ lost_items|length }}</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('found-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                </svg>
+                Found Items Inventory
+                <span class="tab-count-badge">{{ found_items|length }}</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('users-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                </svg>
+                Registered Users &amp; Roles
+                <span class="tab-count-badge">{{ users|length }}</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('notifs-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                Notification Logs
+                <span class="tab-count-badge">{{ notifications|length }}</span>
+            </button>
+            <button class="tab-btn" onclick="switchDashboardTab('db-tab', this)">
+                <svg class="svg-tab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                </svg>
+                Physical DBMS Architecture
+                <span class="tab-count-badge">{{ db_metadata.tables|length }} Tables</span>
+            </button>
+        </div>
+
+        <!-- Live Instant Search Input -->
+        <div class="dashboard-search-wrapper">
+            <svg class="svg-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="dashboardSearchInput" class="dashboard-search-input" placeholder="Live filter across all records..." onkeyup="filterDashboardTables()">
+            <button type="button" class="btn-clear-search" onclick="clearDashboardSearch()" title="Clear search">&times;</button>
+        </div>
+    </div>
+
+    <!-- TAB 1: ALL LOST ITEMS DETAILS -->
+    <div id="lost-tab" class="dashboard-tab-content active">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="lostItemsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Item Name &amp; Description</th>
+                        <th>Category</th>
+                        <th>Reported By (User)</th>
+                        <th>Lost Location</th>
+                        <th>Date Lost</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if lost_items %}
+                        {% for item in lost_items %}
+                        <tr>
+                            <td class="text-mono">#{{ item.lost_item_id }}</td>
+                            <td>
+                                <strong>{{ item.item_name }}</strong>
+                                {% if item.description %}
+                                    <div class="table-subtext">{{ item.description }}</div>
+                                {% endif %}
+                            </td>
+                            <td><span class="badge badge-neutral">{{ item.category or 'General' }}</span></td>
+                            <td>
+                                <span class="user-chip">
+                                    <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                    {{ item.student_name }}
+                                </span>
+                                <div class="table-subtext">{{ item.student_email }} ({{ item.user_role }})</div>
+                            </td>
+                            <td>{{ item.lost_location }}</td>
+                            <td>{{ item.lost_date }}</td>
+                            <td>
+                                <span class="status-badge status-{{ item.status|lower }}">{{ item.status }}</span>
+                            </td>
+                            <td class="text-muted text-xs">{{ item.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="table-empty">No lost item reports currently recorded in the database.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 2: ALL FOUND ITEMS DETAILS -->
+    <div id="found-tab" class="dashboard-tab-content">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="foundItemsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Item Name &amp; Description</th>
+                        <th>Found Location</th>
+                        <th>Found Date</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if found_items %}
+                        {% for item in found_items %}
+                        <tr>
+                            <td class="text-mono">#{{ item.found_item_id }}</td>
+                            <td>
+                                <strong>{{ item.item_name }}</strong>
+                                {% if item.description %}
+                                    <div class="table-subtext">{{ item.description }}</div>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.found_location }}</td>
+                            <td>{{ item.found_date }}</td>
+                            <td>
+                                <span class="status-badge status-{{ item.status|lower }}">{{ item.status }}</span>
+                            </td>
+                            <td class="text-muted text-xs">{{ item.created_at }}</td>
+                            <td>
+                                {% if item.status == 'AVAILABLE' %}
+                                    <form action="{{ url_for('routes.remove_found_item', found_item_id=item.found_item_id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Remove found item #{{ item.found_item_id }} from SQLite?');">
+                                        <button type="submit" class="btn btn-danger-subtle btn-sm">
+                                            <svg class="svg-btn-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                            </svg>
+                                            Remove
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <span class="text-muted text-xs">Archived</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="table-empty">No found items currently cataloged in the department.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 3: ALL USERS & ROLES DETAILS -->
+    <div id="users-tab" class="dashboard-tab-content">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="usersTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">User ID</th>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Role</th>
+                        <th>Total Reports Filed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if users %}
+                        {% for u in users %}
+                        <tr>
+                            <td class="text-mono">#{{ u.user_id }}</td>
+                            <td><strong>{{ u.name }}</strong></td>
+                            <td class="text-mono">{{ u.email }}</td>
+                            <td>
+                                <span class="role-badge role-{{ u.role|lower }}">{{ u.role|upper }}</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">{{ u.total_reports }} reports</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="table-empty">No registered users found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 4: ALL NOTIFICATION LOGS DETAILS -->
+    <div id="notifs-tab" class="dashboard-tab-content">
+        <div class="table-container">
+            <table class="app-table searchable-table" id="notificationsTable">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Recipient</th>
+                        <th>Message Content</th>
+                        <th>Read Status</th>
+                        <th>Sent Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if notifications %}
+                        {% for n in notifications %}
+                        <tr>
+                            <td class="text-mono">#{{ n.notification_id }}</td>
+                            <td>
+                                <strong>{{ n.user_name }}</strong>
+                                <div class="table-subtext">{{ n.user_email }}</div>
+                            </td>
+                            <td>{{ n.message }}</td>
+                            <td>
+                                {% if n.is_read == 1 %}
+                                    <span class="badge badge-neutral">READ</span>
+                                {% else %}
+                                    <span class="badge badge-danger">UNREAD</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-muted text-xs">{{ n.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="table-empty">No notification history recorded in database.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 5: PHYSICAL DBMS ARCHITECTURE & SPECS -->
+    <div id="db-tab" class="dashboard-tab-content">
+        <div class="db-metrics-panel">
+            <div class="db-specs-grid">
+                <div class="spec-card">
+                    <span class="spec-label">DATABASE FILE</span>
+                    <span class="spec-value">{{ db_metadata.file_name }}</span>
+                    <span class="spec-hint">{{ db_metadata.relative_path }}</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">FILE SIZE</span>
+                    <span class="spec-value">{{ db_metadata.file_size_kb }} KB</span>
+                    <span class="spec-hint">{{ db_metadata.file_size_bytes }} bytes</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">PAGE SIZE / COUNT</span>
+                    <span class="spec-value">{{ db_metadata.page_size }} B / {{ db_metadata.page_count }}</span>
+                    <span class="spec-hint">SQLite B-Tree storage pages</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">JOURNAL MODE</span>
+                    <span class="spec-value text-mono">{{ db_metadata.journal_mode|upper }}</span>
+                    <span class="spec-hint">Write-Ahead Logging enabled</span>
+                </div>
+                <div class="spec-card">
+                    <span class="spec-label">ENCODING</span>
+                    <span class="spec-value text-mono">{{ db_metadata.encoding }}</span>
+                    <span class="spec-hint">Character Encoding</span>
+                </div>
+            </div>
+
+            <h3 class="section-subheading" style="margin-top: 24px;">Relational Tables &amp; Internal Schema Definitions</h3>
+            <div class="table-schemas-list">
+                {% for tbl in db_metadata.tables %}
+                    <div class="schema-block">
+                        <div class="schema-header">
+                            <span class="schema-name">
+                                <svg class="svg-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                                Table: <strong>{{ tbl.name }}</strong>
+                            </span>
+                            <span class="badge badge-success">{{ tbl.row_count }} Rows Live</span>
+                        </div>
+                        <pre class="schema-sql"><code>{{ tbl.sql }}</code></pre>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Engine (Vendor & CDN Fallback) -->
+<script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+<script>
+    if (typeof Chart === 'undefined') {
+        const fallback = document.createElement('script');
+        fallback.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        document.head.appendChild(fallback);
+    }
+</script>
+
+<!-- Data payloads for safe client-side script consumption -->
+<script id="categoryDataJson" type="application/json">
+{{ aggregates.category_distribution | tojson }}
+</script>
+<script id="hotspotsDataJson" type="application/json">
+{{ aggregates.location_hotspots | tojson }}
+</script>
+
+<script>
+    // Global Chart.js Palette & Instances
+    const chartPalette = [
+        '#10b981', // Emerald
+        '#3b82f6', // Sapphire Blue
+        '#f59e0b', // Amber
+        '#8b5cf6', // Violet Purple
+        '#ec4899', // Pink
+        '#06b6d4', // Cyan
+        '#14b8a6', // Teal
+        '#6366f1'  // Indigo
+    ];
+
+    const categoryDataEl = document.getElementById('categoryDataJson');
+    const hotspotsDataEl = document.getElementById('hotspotsDataJson');
+    const categoryDataRaw = categoryDataEl ? JSON.parse(categoryDataEl.textContent || '[]') : [];
+    const hotspotsDataRaw = hotspotsDataEl ? JSON.parse(hotspotsDataEl.textContent || '[]') : [];
+
+    let categoryChartInstance = null;
+    let currentCategoryChartType = 'doughnut';
+
+    function initCategoryChart() {
+        const ctx = document.getElementById('categoryChart');
+        if (!ctx || typeof Chart === 'undefined') return;
+
+        const labels = categoryDataRaw.map(c => c.category);
+        const dataVals = categoryDataRaw.map(c => c.count);
+        const colors = categoryDataRaw.map((_, i) => chartPalette[i % chartPalette.length]);
+
+        const isDoughnut = currentCategoryChartType === 'doughnut';
+        const isBar = currentCategoryChartType === 'bar';
+
+        categoryChartInstance = new Chart(ctx, {
+            type: currentCategoryChartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Lost Items',
+                    data: dataVals,
+                    backgroundColor: colors,
+                    borderColor: '#ffffff',
+                    borderWidth: isBar ? 0 : 2,
+                    borderRadius: isBar ? 4 : 0,
+                    hoverOffset: isBar ? 0 : 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1200,
+                    easing: 'easeOutQuart'
+                },
+                layout: {
+                    padding: isDoughnut ? 8 : 4
+                },
+                plugins: {
+                    legend: {
+                        display: false // Illustrated cleanly by the interactive side-panel list
+                    },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e2e8f0',
+                        titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12, weight: 'bold' },
+                        bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12 },
+                        padding: 10,
+                        cornerRadius: 6,
+                        boxPadding: 4,
+                        callbacks: {
+                            label: function(context) {
+                                const chartEl = document.getElementById('categoryChart');
+                                const total = chartEl ? parseInt(chartEl.getAttribute('data-total-lost') || '0', 10) : 0;
+                                const val = context.raw || 0;
+                                const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                                return ` ${context.label}: ${val} items (${pct}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: isDoughnut ? '68%' : 0,
+                scales: isBar ? {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0, font: { size: 11 } },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    x: {
+                        ticks: { font: { size: 11 } },
+                        grid: { display: false }
+                    }
+                } : {}
+            }
+        });
+    }
+
+    function changeCategoryChartType(type) {
+        currentCategoryChartType = type;
+        document.querySelectorAll('.chart-type-btn').forEach(btn => btn.classList.remove('active'));
+        
+        let targetBtnId = 'btnChart' + type.charAt(0).toUpperCase() + type.slice(1);
+        if (type === 'polarArea') targetBtnId = 'btnChartPolarArea';
+        const targetBtn = document.getElementById(targetBtnId);
+        if (targetBtn) targetBtn.classList.add('active');
+
+        const centerStats = document.getElementById('chartCenterStats');
+        if (centerStats) {
+            centerStats.style.opacity = type === 'doughnut' ? '1' : '0';
+        }
+
+        if (categoryChartInstance) {
+            categoryChartInstance.destroy();
+        }
+        initCategoryChart();
+    }
+
+    function initHotspotsChart() {
+        const ctx = document.getElementById('hotspotsChart');
+        if (!ctx || typeof Chart === 'undefined') return;
+
+        const labels = hotspotsDataRaw.map(h => h.location);
+        const dataVals = hotspotsDataRaw.map(h => h.count);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Reported Incidents',
+                    data: dataVals,
+                    backgroundColor: 'rgba(27, 77, 62, 0.85)',
+                    hoverBackgroundColor: '#10b981',
+                    borderRadius: 4,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e2e8f0',
+                        padding: 9,
+                        cornerRadius: 6,
+                        callbacks: {
+                            label: function(ctx) {
+                                return ` Incidents: ${ctx.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { precision: 0, font: { size: 10 } },
+                        grid: { color: '#f1f5f9' }
+                    },
+                    y: {
+                        ticks: {
+                            font: { size: 10.5, family: "'Plus Jakarta Sans', sans-serif" },
+                            callback: function(value) {
+                                const lbl = this.getLabelForValue(value);
+                                return lbl.length > 17 ? lbl.substring(0, 15) + '..' : lbl;
+                            }
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize charts on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        function checkAndInit() {
+            if (typeof Chart !== 'undefined') {
+                initCategoryChart();
+                initHotspotsChart();
+            } else {
+                setTimeout(checkAndInit, 100);
+            }
+        }
+        checkAndInit();
+    });
+
+    // Tab switching controller
+    function switchDashboardTab(tabId, btnElement) {
+        document.querySelectorAll('.dashboard-tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+        if (btnElement) {
+            btnElement.classList.add('active');
+        }
+    }
+
+    // Live search filter across active table rows
+    function filterDashboardTables() {
+        const query = document.getElementById('dashboardSearchInput').value.toLowerCase().trim();
+        const tables = document.querySelectorAll('.searchable-table');
+
+        tables.forEach(table => {
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if (row.classList.contains('table-empty')) return;
+                const text = row.innerText.toLowerCase();
+                if (query === '' || text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Clear search
+    function clearDashboardSearch() {
+        const input = document.getElementById('dashboardSearchInput');
+        input.value = '';
+        filterDashboardTables();
+        input.focus();
+    }
+</script>
+{% endblock %}
+
+

@@ -14,8 +14,10 @@ if PROJECT_ROOT not in sys.path:
 from backend.main import create_app
 from backend.config import HOST, PORT, DEBUG, DATABASE_PATH
 
+# Expose WSGI application instance for gunicorn and cloud deployment
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     print("=" * 70)
     print(" UNIVERSITY LOST & FOUND DEPARTMENT - ACADEMIC DBMS MINI PROJECT")
     print("=" * 70)
@@ -24,3 +26,4 @@ if __name__ == "__main__":
     print(f" > Live Server: http://{HOST}:{PORT}")
     print("=" * 70)
     app.run(host=HOST, port=PORT, debug=DEBUG)
+

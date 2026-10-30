@@ -55,13 +55,25 @@ University-Lost-and-Found/
 
 ---
 
-## Architectural Data Flow
+## Features & Master Operations Dashboard
 
-$$\text{Frontend (HTML/CSS)} \longrightarrow \text{Backend Routes} \longrightarrow \text{Services} \longrightarrow \text{Repositories} \longrightarrow \text{SQLite DB}$$
+The system includes a dedicated **Master Operations & DBMS Analytics Dashboard** (`/` or `/dashboard`):
 
-- **Zero SQL in Frontend**: Presentation layer is completely decoupled from database access.
-- **Single Source of Truth**: All SQL queries are encapsulated inside `backend/app/repositories/lost_found_repo.py`.
-- **Centralized Configuration**: `backend/config.py` manages all database and template paths.
+- **4 Key Performance Indicator (KPI) Cards**:
+  - Total Lost Reports with status breakdown (`SEARCHING`, `FOUND`, `COLLECTED`)
+  - Found Items Inventory (`AVAILABLE`, `CLAIMED`, `DISPOSED`)
+  - Recovery / Resolution Rate percentage gauge
+  - Community Metrics (Students, Faculty, Admins) & notification logs
+- **Visual Analytics**:
+  - Item category distribution progress bars
+  - Campus activity hotspot rankings
+- **Multi-Tab Detailed Data Explorer**:
+  - **Lost Items Registry**: Complete details with student details, location, status, and timestamps
+  - **Found Items Inventory**: Full catalog of turned-in items with quick removal/management actions
+  - **Registered Users & Roles**: Complete directory of students, faculty, and administrators
+  - **Notification History**: Audit trail of system messages and student alerts
+  - **Physical DBMS Architecture**: Live SQLite telemetry (`lost_and_found.db`, file size, page size, page count, WAL journal mode, and raw table schemas with row counts)
+- **Instant Live Search**: Real-time client-side filter across all records and tables without page reloads.
 
 ---
 

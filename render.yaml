@@ -3,11 +3,7 @@ services:
     name: university-lost-found-dbms
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app
+    startCommand: gunicorn main:app
     envVars:
-      - key: FLASK_DEBUG
-        value: "False"
-      - key: SECRET_KEY
-        generateValue: true
-      - key: ADMIN_PASSWORD
-        value: admin@123
+      - key: PYTHON_VERSION
+        value: 3.12.0

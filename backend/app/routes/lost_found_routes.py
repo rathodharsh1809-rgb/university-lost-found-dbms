@@ -6,7 +6,7 @@ Contains ZERO SQL queries and NO direct SQLite database connection.
 """
 
 from functools import wraps
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from backend.config import ADMIN_PASSWORD
 from backend.app.services.lost_found_service import LostFoundService
 
@@ -42,6 +42,17 @@ def inject_global_data():
 # =============================================================================
 
 @routes_bp.route("/")
+@routes_bp.route("/dashboard")
+def dashboard():
+    """Central Executive Dashboard: Comprehensive Metrics, Registries, and DBMS Architecture."""
+    dashboard_data = LostFoundService.get_dashboard_data()
+    return render_template(
+        "dashboard.html",
+        active_page="dashboard",
+        **dashboard_data
+    )
+
+
 @routes_bp.route("/browse")
 def browse():
     """Page 1: Browse Found Items."""
@@ -128,6 +139,25 @@ def admin_logout():
     """Admin Logout: Clears admin session and redirects to Browse page."""
     session.pop("is_admin", None)
     return redirect(url_for("routes.browse"))
+
+
+@routes_bp.route("/api/admin/unlock", methods=["POST"])
+def api_admin_unlock():
+    """API endpoint: Verify admin credentials with instant JSON feedback."""
+    payload = request.get_json(silent=True) or request.form
+    password = payload.get("password", "")
+    if password == ADMIN_PASSWORD:
+        session["is_admin"] = True
+        return jsonify({"success": True, "message": "Admin credentials authenticated successfully."})
+    return jsonify({"success": False, "message": "Invalid admin password. Try 'admin@123'"}), 401
+
+
+@routes_bp.route("/api/admin/lock", methods=["POST"])
+def api_admin_lock():
+    """API endpoint: Lock admin clearance from the dashboard."""
+    session.pop("is_admin", None)
+    return jsonify({"success": True, "message": "Admin clearance locked."})
+
 
 
 @routes_bp.route("/admin")

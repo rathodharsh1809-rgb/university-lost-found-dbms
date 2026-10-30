@@ -15,7 +15,7 @@
     <header class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <a href="{{ url_for('routes.browse') }}" class="brand-link">
+                <a href="{{ url_for('routes.dashboard') }}" class="brand-link">
                     <span class="brand-symbol">
                         <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
@@ -30,6 +30,15 @@
             </div>
 
             <nav class="nav-menu">
+                <a href="{{ url_for('routes.dashboard') }}" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">
+                    <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Dashboard
+                </a>
                 <a href="{{ url_for('routes.browse') }}" class="nav-item {% if active_page == 'browse' %}active{% endif %}">
                     <svg class="svg-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"/>

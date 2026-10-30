@@ -104,3 +104,28 @@ class LostFoundService:
     def get_unread_count(cls, user_id: int) -> int:
         """Returns unread notification badge count."""
         return LostFoundRepository.get_unread_notification_count(user_id)
+
+    @classmethod
+    def get_dashboard_data(cls) -> Dict[str, Any]:
+        """
+        Aggregates all system metrics, registries, and physical DBMS metadata
+        for the master executive dashboard.
+        """
+        from backend.app.utils.db import get_internal_metadata
+        
+        aggregates = LostFoundRepository.get_dashboard_aggregates()
+        lost_items = LostFoundRepository.get_all_lost_reports_with_user()
+        found_items = LostFoundRepository.get_all_found_items()
+        users = LostFoundRepository.get_all_users_with_stats()
+        notifications = LostFoundRepository.get_all_notifications_with_users()
+        db_metadata = get_internal_metadata()
+
+        return {
+            "aggregates": aggregates,
+            "lost_items": lost_items,
+            "found_items": found_items,
+            "users": users,
+            "notifications": notifications,
+            "db_metadata": db_metadata
+        }
+
